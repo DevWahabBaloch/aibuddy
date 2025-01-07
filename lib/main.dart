@@ -2,9 +2,12 @@ import 'package:aibuddy/features/splash_screen/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'firebase_options.dart';
 
 void main() async {
+  await dotenv.load(fileName: '.env');
+  // Env.init();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
