@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1037952992835",
+    "project_id": "aibuddy-app",
+    "storage_bucket": "aibuddy-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037952992835:android:fef5148a5db85a45acf6f6",
+        "android_client_info": {
+          "package_name": "com.example.aibuddy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZYT9bwiciSHkxlY2C9T50HeI4v5R32QU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
