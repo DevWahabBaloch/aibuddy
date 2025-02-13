@@ -9,9 +9,7 @@ class ChatScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color.lerp(Colors.black, Colors.white, 0.1),
       appBar: MyAppBar(title: 'AI Buddy'),
-      body: const Column(
-        children: [],
-      ),
+      body: const Column(),
     );
   }
 }
