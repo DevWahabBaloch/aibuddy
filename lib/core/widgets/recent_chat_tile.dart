@@ -14,7 +14,7 @@ class RecentChatTile extends StatelessWidget {
           horizontal: width * 0.01, vertical: height * 0.01),
       decoration: BoxDecoration(
         color: Colors.transparent.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(20.0)
       ),
       child: Row(
         children: [
@@ -23,10 +23,10 @@ class RecentChatTile extends StatelessWidget {
             child: IconContainer(
                 iconString: 'assets/icons/qrcode.png',
                 quaterTurns: 4,
-                color: Colors.greenAccent),
+                color: Colors.greenAccent)
           ),
           SizedBox(
-            width: width * 0.03,
+            width: width * 0.03
           ),
           Expanded(
             flex: 7,
@@ -36,7 +36,7 @@ class RecentChatTile extends StatelessWidget {
                   fontSize: 20,
                   color: Colors.white,
                   overflow: TextOverflow.ellipsis,
-                  fontFamily: 'Josefin Sans'),
+                  fontFamily: 'Josefin Sans')
             ),
           ),
           const Expanded(
