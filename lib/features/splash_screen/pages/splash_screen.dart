@@ -1,7 +1,6 @@
-import 'package:aibuddy/core/widgets/glass_button.dart';
-import 'package:aibuddy/features/home_page/home_page.dart';
+import 'package:aibuddy/core/constants/app_colors.dart';
+import 'package:aibuddy/core/widgets/app_scaffold/app_scaffold.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -10,60 +9,22 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      backgroundColor: Color.lerp(Colors.black, Colors.white, 0.1),
-      body: Column(
+    return AppScaffold(
+      body: const Column(
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: height * 0.06),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: width * 0.4,
-                  height: height * 0.043,
-                  decoration:
-                      BoxDecoration(color: Color.lerp(Colors.indigo, Colors.white, 0.2), borderRadius: BorderRadius.circular(20)),
-                  child: const Center(
-                    child: Text(
-                      'Personal AI Buddy',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          wordSpacing: 3,
-                          fontFamily: 'Josefin Sans'),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                'assets/images/im1.png',
-                height: height * 0.3,
+              Column(
+                children: [
+                  Text(
+                    'Sign in',
+                    style: TextStyle(color: AppColors.secondary),
+                  ),
+                  Text('Access to your account', style: TextStyle(color: AppColors.secondary))
+                ],
               ),
             ],
-          ),
-          SizedBox(height: height * 0.1),
-          const Text(
-            'Where Conversations\n\t\t\t\t\t\tMeet Solutions',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30, fontFamily: 'Josefin Sans'),
-          ),
-          SizedBox(height: height * 0.02),
-          const Text(
-            'AI buddy can answer any of your\n\t\t\t\t\t\t\t\t\t\t\t\tquestion, Just ask!',
-            style: TextStyle(color: Colors.white30, fontSize: 15, fontFamily: 'Josefin Sans'),
-          ),
-          SizedBox(height: height * 0.17),
-          GlassButton(
-              text: 'Start a Conversation',
-              onPressed: () {
-                Get.to(const HomePage());
-              }),
+          )
         ],
       ),
     );

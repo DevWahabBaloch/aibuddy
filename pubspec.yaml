@@ -39,6 +39,7 @@ dependencies:
   cached_network_image: ^3.4.1
   path_provider: ^2.1.5
   get: ^4.7.2
+  flutter_svg: ^2.0.17
 
 dev_dependencies:
   flutter_test:
