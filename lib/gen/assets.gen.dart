@@ -105,6 +105,9 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/bott.png
+  AssetGenImage get bott => const AssetGenImage('assets/images/bott.png');
+
   /// File path: assets/images/googleicon.png
   AssetGenImage get googleicon =>
       const AssetGenImage('assets/images/googleicon.png');
@@ -130,7 +133,7 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values =>
-      [googleicon, im1, messages, padlock, unlock, user, userP];
+      [bott, googleicon, im1, messages, padlock, unlock, user, userP];
 }
 
 class $AssetsSvgsGen {
