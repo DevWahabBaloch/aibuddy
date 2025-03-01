@@ -2,6 +2,7 @@ import 'package:aibuddy/core/widgets/icon_container.dart';
 import 'package:aibuddy/core/widgets/recent_chat_tile.dart';
 import 'package:aibuddy/features/chat_page/chat_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -13,8 +14,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color.lerp(Colors.black, Colors.white, 0.1),
       body: Padding(
-        padding: EdgeInsets.symmetric(
-            vertical: height * 0.015, horizontal: width * 0.03),
+        padding: EdgeInsets.symmetric(vertical: height * 0.015, horizontal: width * 0.03),
         child: SingleChildScrollView(
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.start,
@@ -28,8 +28,7 @@ class HomePage extends StatelessWidget {
                     color: Color.fromARGB(135, 214, 214, 214),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: height * 0.04, horizontal: width * 0.03),
+                    padding: EdgeInsets.symmetric(vertical: height * 0.04, horizontal: width * 0.03),
                     child: Image.asset(
                       height: width * 0.1,
                       'assets/images/user_p.png',
@@ -49,17 +48,11 @@ class HomePage extends StatelessWidget {
                           children: [
                             TextSpan(
                               text: 'Hello,',
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  color: Colors.white70,
-                                  fontFamily: 'Josefin Sans'),
+                              style: TextStyle(fontSize: 30, color: Colors.white70, fontFamily: 'Josefin Sans'),
                             ),
                             TextSpan(
                               text: 'Wahab',
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  color: Colors.white,
-                                  fontFamily: 'Josefin Sans'),
+                              style: TextStyle(fontSize: 30, color: Colors.white, fontFamily: 'Josefin Sans'),
                             ),
                           ],
                         ),
@@ -69,22 +62,16 @@ class HomePage extends StatelessWidget {
                   SizedBox(height: height * 0.01),
                   const Text(
                     'How can I help you right now?',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white70,
-                        fontFamily: 'Josefin Sans'),
+                    style: TextStyle(fontSize: 18, color: Colors.white70, fontFamily: 'Josefin Sans'),
                   ),
                   SizedBox(height: height * 0.03),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        height: height * 0.3,
-                        width: width * 0.4,
-                        decoration: BoxDecoration(
-                          color: Color.lerp(
-                              const Color(0xffc1b9fb), Colors.greenAccent, 0.7),
+                      Card(
+                        elevation: 0, // Adds subtle shadow
+                        shape: const RoundedRectangleBorder(
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(60),
                             bottomRight: Radius.circular(20),
@@ -92,55 +79,43 @@ class HomePage extends StatelessWidget {
                             topRight: Radius.circular(20),
                           ),
                         ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: width * 0.035,
-                              vertical: height * 0.05),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const IconContainer(
-                                iconString: 'assets/icons/mic.png',
-                                quaterTurns: 4,
-                                color: Color.fromARGB(228, 214, 214, 214),
-                              ),
-                              SizedBox(
-                                height: height * 0.015,
-                              ),
-                              const Text(
-                                'Talk',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 30,
-                                    fontFamily: 'Josefin Sans'),
-                              ),
-                              const Text(
-                                'With',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 30,
-                                    fontFamily: 'Josefin Sans'),
-                              ),
-                              const Text(
-                                'Buddy',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 30,
-                                    fontFamily: 'Josefin Sans'),
-                              ),
-                            ],
+                        color: Color.lerp(const Color(0xffc1b9fb), Colors.greenAccent, 0.7), // Background color
+                        child: SizedBox(
+                          height: height * 0.3,
+                          width: width * 0.4,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: width * 0.035, vertical: height * 0.05),
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                IconContainer(
+                                  iconString: 'assets/icons/mic.png',
+                                  quaterTurns: 4,
+                                  color: Color.fromARGB(228, 214, 214, 214),
+                                ),
+                                Text(
+                                  'Talk',
+                                  style: TextStyle(color: Colors.black, fontSize: 30, fontFamily: 'Josefin Sans'),
+                                ),
+                                Text(
+                                  'With',
+                                  style: TextStyle(color: Colors.black, fontSize: 30, fontFamily: 'Josefin Sans'),
+                                ),
+                                Text(
+                                  'Buddy',
+                                  style: TextStyle(color: Colors.black, fontSize: 30, fontFamily: 'Josefin Sans'),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                      SizedBox(width: width * 0.03),
+                      SizedBox(width: width * 0.02),
                       Column(
                         children: [
                           GestureDetector(
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const ChatScreen())),
+                            onTap: () => Get.to(const ChatScreen()),
                             child: Container(
                               height: height * 0.14,
                               width: width * 0.5,
@@ -154,9 +129,7 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                               child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: width * 0.03,
-                                    vertical: height * 0.02),
+                                padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: height * 0.02),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,10 +144,7 @@ class HomePage extends StatelessWidget {
                                     ),
                                     const Text(
                                       'Chat with Buddy',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 22,
-                                          fontFamily: 'Josefin Sans'),
+                                      style: TextStyle(color: Colors.black, fontSize: 22, fontFamily: 'Josefin Sans'),
                                     ),
                                   ],
                                 ),
@@ -195,9 +165,7 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: width * 0.03,
-                                  vertical: height * 0.02),
+                              padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: height * 0.02),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,10 +180,7 @@ class HomePage extends StatelessWidget {
                                   ),
                                   const Text(
                                     'Search by Image',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 22,
-                                        fontFamily: 'Josefin Sans'),
+                                    style: TextStyle(color: Colors.black, fontSize: 22, fontFamily: 'Josefin Sans'),
                                   ),
                                 ],
                               ),
@@ -226,24 +191,17 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: height * 0.023, horizontal: width * 0.02),
+                    padding: EdgeInsets.symmetric(vertical: height * 0.023, horizontal: width * 0.02),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Recent Search',
-                          style: TextStyle(
-                              fontSize: 28,
-                              color: Colors.white70,
-                              fontFamily: 'Josefin Sans'),
+                          style: TextStyle(fontSize: 28, color: Colors.white70, fontFamily: 'Josefin Sans'),
                         ),
                         Text(
                           'View All',
-                          style: TextStyle(
-                              fontSize: 28,
-                              color: Colors.white70,
-                              fontFamily: 'Josefin Sans'),
+                          style: TextStyle(fontSize: 28, color: Colors.white70, fontFamily: 'Josefin Sans'),
                         ),
                       ],
                     ),

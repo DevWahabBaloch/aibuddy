@@ -7,7 +7,9 @@ class IconContainer extends StatelessWidget {
   final Color color;
   const IconContainer({
     super.key,
-    required this.iconString, required this.quaterTurns, required this.color,
+    required this.iconString,
+    required this.quaterTurns,
+    required this.color,
   });
 
   @override
@@ -15,11 +17,10 @@ class IconContainer extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-      height: 45,
-      width: 40,
+      height: height * 0.05,
+      width: width * 0.1,
       padding: const EdgeInsets.all(11),
-      decoration:
-          BoxDecoration(color: color, shape: BoxShape.circle),
+      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
       child: RotatedBox(
         quarterTurns: quaterTurns,
         child: Center(

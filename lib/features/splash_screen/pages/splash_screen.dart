@@ -1,6 +1,7 @@
 import 'package:aibuddy/core/widgets/glass_button.dart';
 import 'package:aibuddy/features/home_page/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -21,9 +22,8 @@ class SplashScreen extends StatelessWidget {
                 Container(
                   width: width * 0.4,
                   height: height * 0.043,
-                  decoration: BoxDecoration(
-                      color: Color.lerp(Colors.indigo, Colors.white, 0.2),
-                      borderRadius: BorderRadius.circular(20)),
+                  decoration:
+                      BoxDecoration(color: Color.lerp(Colors.indigo, Colors.white, 0.2), borderRadius: BorderRadius.circular(20)),
                   child: const Center(
                     child: Text(
                       'Personal AI Buddy',
@@ -51,29 +51,18 @@ class SplashScreen extends StatelessWidget {
           SizedBox(height: height * 0.1),
           const Text(
             'Where Conversations\n\t\t\t\t\t\tMeet Solutions',
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
-                fontFamily: 'Josefin Sans'),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30, fontFamily: 'Josefin Sans'),
           ),
           SizedBox(height: height * 0.02),
           const Text(
             'AI buddy can answer any of your\n\t\t\t\t\t\t\t\t\t\t\t\tquestion, Just ask!',
-            style: TextStyle(
-                color: Colors.white30,
-                fontSize: 15,
-                fontFamily: 'Josefin Sans'),
+            style: TextStyle(color: Colors.white30, fontSize: 15, fontFamily: 'Josefin Sans'),
           ),
           SizedBox(height: height * 0.17),
           GlassButton(
               text: 'Start a Conversation',
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomePage(),
-                    ));
+                Get.to(const HomePage());
               }),
         ],
       ),
