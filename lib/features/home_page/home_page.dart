@@ -70,16 +70,16 @@ class HomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Card(
-                        elevation: 0, // Adds subtle shadow
+                        elevation: 0,
                         shape: const RoundedRectangleBorder(
-                          borderRadius: const BorderRadius.only(
+                          borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(60),
                             bottomRight: Radius.circular(20),
                             topLeft: Radius.circular(20),
                             topRight: Radius.circular(20),
                           ),
                         ),
-                        color: Color.lerp(const Color(0xffc1b9fb), Colors.greenAccent, 0.7), // Background color
+                        color: Color.lerp(const Color(0xffc1b9fb), Colors.greenAccent, 0.7),
                         child: SizedBox(
                           height: height * 0.3,
                           width: width * 0.4,

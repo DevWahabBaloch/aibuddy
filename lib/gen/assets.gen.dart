@@ -105,14 +105,48 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/googleicon.png
+  AssetGenImage get googleicon =>
+      const AssetGenImage('assets/images/googleicon.png');
+
   /// File path: assets/images/im1.png
   AssetGenImage get im1 => const AssetGenImage('assets/images/im1.png');
+
+  /// File path: assets/images/messages.png
+  AssetGenImage get messages =>
+      const AssetGenImage('assets/images/messages.png');
+
+  /// File path: assets/images/padlock.png
+  AssetGenImage get padlock => const AssetGenImage('assets/images/padlock.png');
+
+  /// File path: assets/images/unlock.png
+  AssetGenImage get unlock => const AssetGenImage('assets/images/unlock.png');
+
+  /// File path: assets/images/user.png
+  AssetGenImage get user => const AssetGenImage('assets/images/user.png');
 
   /// File path: assets/images/user_p.png
   AssetGenImage get userP => const AssetGenImage('assets/images/user_p.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [im1, userP];
+  List<AssetGenImage> get values =>
+      [googleicon, im1, messages, padlock, unlock, user, userP];
+}
+
+class $AssetsSvgsGen {
+  const $AssetsSvgsGen();
+
+  /// File path: assets/svgs/bot1.svg
+  String get bot1 => 'assets/svgs/bot1.svg';
+
+  /// File path: assets/svgs/bot2.svg
+  String get bot2 => 'assets/svgs/bot2.svg';
+
+  /// File path: assets/svgs/bot3.svg
+  String get bot3 => 'assets/svgs/bot3.svg';
+
+  /// List of all assets
+  List<String> get values => [bot1, bot2, bot3];
 }
 
 class Assets {
@@ -121,6 +155,7 @@ class Assets {
   static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsSvgsGen svgs = $AssetsSvgsGen();
 }
 
 class AssetGenImage {
