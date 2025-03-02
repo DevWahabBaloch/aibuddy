@@ -9,7 +9,18 @@ class AuthService {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
+      if (googleUser == null) {
+        log('Google sign-in canceled');
+        return null;
+      }
+
       final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+      if (googleAuth?.accessToken == null && googleAuth?.idToken == null) {
+        log('Google sign-in error: No access token or ID token');
+        Get.snackbar('Error', 'Google sign-in failed. Please try again.', snackPosition: SnackPosition.BOTTOM);
+        return null;
+      }
 
       final credential = GoogleAuthProvider.credential(accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
       return await FirebaseAuth.instance.signInWithCredential(credential);
