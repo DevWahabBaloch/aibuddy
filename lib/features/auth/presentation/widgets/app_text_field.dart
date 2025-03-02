@@ -1,5 +1,5 @@
 import 'package:aibuddy/core/constants/app_colors.dart';
-import 'package:aibuddy/features/auth/presentation/controller/text_field_password_controller.dart';
+import 'package:aibuddy/features/auth/presentation/controllers/text_field_password_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
