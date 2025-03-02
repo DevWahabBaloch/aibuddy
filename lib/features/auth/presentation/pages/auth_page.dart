@@ -1,14 +1,18 @@
 import 'dart:developer';
 import 'package:aibuddy/core/constants/app_colors.dart';
+import 'package:aibuddy/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:aibuddy/features/auth/presentation/widgets/app_button.dart';
 import 'package:aibuddy/features/auth/presentation/widgets/app_text_field.dart';
 import 'package:aibuddy/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AuthPage extends StatelessWidget {
-  const AuthPage({super.key});
+  AuthPage({super.key});
   // final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  AuthController authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +66,9 @@ class AuthPage extends StatelessWidget {
                     )),
                 SizedBox(height: height * 0.02),
                 AppButton.iconTextButton(
+                  onPressed: () async {
+                    await authController.signInWithGoogle();
+                  },
                   buttonColor: AppColors.onSecondary,
                   borderRadius: 30,
                   prefixIcon: Padding(
