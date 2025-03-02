@@ -75,11 +75,11 @@ class _PasswordTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextFieldPasswordController textFieldPasswordController = Get.put(TextFieldPasswordController());
+    final passwordController = Get.put(TextFieldPasswordController());
     return Obx(() => TextFormField(
           onTapOutside: (event) => FocusManager.instance.primaryFocus!.unfocus(),
           controller: controller,
-          obscureText: textFieldPasswordController.isObscure.value,
+          obscureText: passwordController.isObscure.value,
           keyboardType: TextInputType.text,
           style: const TextStyle(
             color: AppColors.secondary,
@@ -96,10 +96,10 @@ class _PasswordTextField extends StatelessWidget {
             prefixIcon: Icon(Icons.lock, color: Colors.grey[400]),
             suffixIcon: IconButton(
               icon: Icon(
-                textFieldPasswordController.isObscure.value ? Icons.visibility_off : Icons.visibility,
+                passwordController.isObscure.value ? Icons.visibility_off : Icons.visibility,
                 color: Colors.grey[400],
               ),
-              onPressed: textFieldPasswordController.toggleVisibility,
+              onPressed: passwordController.toggleVisibility,
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
