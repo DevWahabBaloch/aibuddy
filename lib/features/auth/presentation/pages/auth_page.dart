@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:aibuddy/core/constants/app_colors.dart';
 import 'package:aibuddy/features/auth/presentation/widgets/app_button.dart';
 import 'package:aibuddy/features/auth/presentation/widgets/app_text_field.dart';
@@ -9,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
+  // final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +16,12 @@ class AuthPage extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.primary,
-      body: SafeArea(
-        child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: width * 0.04),
+      body: Padding(
+          padding: EdgeInsets.only(left: width * 0.06, right: width * 0.06, top: height * 0.15),
+          child: SingleChildScrollView(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,36 +42,10 @@ class AuthPage extends StatelessWidget {
                 ),
                 AppTextField(
                   hintText: 'Username',
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: SizedBox(
-                      height: height * 0.03,
-                      width: width * 0.03,
-                      child: Image.asset(
-                        Assets.images.user.path,
-                        fit: BoxFit.contain,
-                        color: AppColors.secondary,
-                      ),
-                    ),
-                  ),
                 ),
                 SizedBox(height: height * 0.02),
-                AppTextField(
-                  obscureText: true,
-                  onVisibilityToggle: () {},
+                AppTextField.password(
                   hintText: 'Password',
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: SizedBox(
-                      height: height * 0.03,
-                      width: width * 0.03,
-                      child: Image.asset(
-                        Assets.images.padlock.path,
-                        fit: BoxFit.contain,
-                        color: AppColors.secondary,
-                      ),
-                    ),
-                  ),
                 ),
                 SizedBox(height: height * 0.01),
                 AppButton(
@@ -123,8 +97,8 @@ class AuthPage extends StatelessWidget {
                   title: 'Login',
                 ),
               ],
-            )),
-      ),
+            ),
+          )),
     );
   }
 }
