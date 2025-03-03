@@ -5,16 +5,20 @@ import 'package:get/get.dart';
 
 class AppTextField extends StatelessWidget {
   final Widget _child;
-  AppTextField({super.key, required String hintText, final TextEditingController? controller})
+  AppTextField(
+      {super.key, required String hintText, final TextEditingController? controller, final String? Function(String?)? validator})
       : _child = _UsernameTextField(
           hintText: hintText,
           controller: controller,
+          validator: validator,
         );
 
-  AppTextField.password({super.key, required String hintText, final TextEditingController? controller})
+  AppTextField.password(
+      {super.key, required String hintText, final TextEditingController? controller, final String? Function(String?)? validator})
       : _child = _PasswordTextField(
           hintText: hintText,
           controller: controller,
+          validator: validator,
         );
 
   @override
@@ -26,10 +30,12 @@ class AppTextField extends StatelessWidget {
 class _UsernameTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
   const _UsernameTextField({
     required this.hintText,
     this.controller,
+    this.validator,
   });
 
   @override
@@ -37,6 +43,7 @@ class _UsernameTextField extends StatelessWidget {
     return TextFormField(
       onTapOutside: (event) => FocusManager.instance.primaryFocus!.unfocus(),
       controller: controller,
+      validator: validator,
       keyboardType: TextInputType.text,
       style: const TextStyle(
         color: AppColors.secondary,
@@ -67,10 +74,12 @@ class _UsernameTextField extends StatelessWidget {
 class _PasswordTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
   const _PasswordTextField({
     required this.hintText,
     this.controller,
+    this.validator,
   });
 
   @override
@@ -79,6 +88,7 @@ class _PasswordTextField extends StatelessWidget {
     return Obx(() => TextFormField(
           onTapOutside: (event) => FocusManager.instance.primaryFocus!.unfocus(),
           controller: controller,
+          validator: validator,
           obscureText: passwordController.isObscure.value,
           keyboardType: TextInputType.text,
           style: const TextStyle(
