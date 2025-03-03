@@ -3,11 +3,14 @@ import 'package:aibuddy/core/constants/app_colors.dart';
 import 'package:aibuddy/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:aibuddy/features/auth/presentation/widgets/app_button.dart';
 import 'package:aibuddy/features/auth/presentation/widgets/app_text_field.dart';
+import 'package:aibuddy/features/auth/sign_up_page/presentation/pages/sign_up_page.dart';
+import 'package:aibuddy/features/chat_page/chat_screen.dart';
 import 'package:aibuddy/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// ignore: must_be_immutable
 class AuthPage extends StatelessWidget {
   AuthPage({super.key});
   // final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -68,6 +71,7 @@ class AuthPage extends StatelessWidget {
                 AppButton.iconTextButton(
                   onPressed: () async {
                     await authController.signInWithGoogle();
+                    Get.to(const ChatScreen());
                   },
                   buttonColor: AppColors.onSecondary,
                   borderRadius: 30,
@@ -84,6 +88,7 @@ class AuthPage extends StatelessWidget {
                   title: 'Continue with Google',
                 ),
                 AppButton.iconTextButton(
+                  onPressed: () => Get.off(SignUpPage()),
                   buttonColor: AppColors.onSecondary,
                   borderRadius: 30,
                   prefixIcon: Padding(

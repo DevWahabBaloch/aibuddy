@@ -1,5 +1,6 @@
 import 'package:aibuddy/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget _child;
@@ -53,7 +54,9 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               child: Row(
                 children: [
-                  Image.asset(Assets.icons.chevron.path, height: height * 0.03, color: Colors.white),
+                  GestureDetector(
+                      onTap: () => Get.back(),
+                      child: Image.asset(Assets.icons.chevron.path, height: height * 0.03, color: Colors.white)),
                   SizedBox(
                     width: width * 0.3,
                   ),
