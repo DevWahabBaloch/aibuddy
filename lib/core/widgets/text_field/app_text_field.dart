@@ -1,5 +1,4 @@
 import 'package:aibuddy/core/constants/app_colors.dart';
-import 'package:aibuddy/features/auth/presentation/controllers/text_field_password_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -71,7 +70,7 @@ class _UsernameTextField extends StatelessWidget {
   }
 }
 
-class _PasswordTextField extends StatelessWidget {
+class _PasswordTextField extends StatefulWidget {
   final String hintText;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -83,43 +82,52 @@ class _PasswordTextField extends StatelessWidget {
   });
 
   @override
+  State<_PasswordTextField> createState() => _PasswordTextFieldState();
+}
+
+class _PasswordTextFieldState extends State<_PasswordTextField> {
+  bool obsecured = true;
+  @override
   Widget build(BuildContext context) {
-    final passwordController = Get.put(TextFieldPasswordController());
-    return Obx(() => TextFormField(
-          onTapOutside: (event) => FocusManager.instance.primaryFocus!.unfocus(),
-          controller: controller,
-          validator: validator,
-          obscureText: passwordController.isObscure.value,
-          keyboardType: TextInputType.text,
-          style: const TextStyle(
-            color: AppColors.secondary,
-            fontSize: 16,
+    return TextFormField(
+      onTapOutside: (event) => FocusManager.instance.primaryFocus!.unfocus(),
+      controller: widget.controller,
+      validator: widget.validator,
+      obscureText: obsecured,
+      keyboardType: TextInputType.text,
+      style: const TextStyle(
+        color: AppColors.secondary,
+        fontSize: 16,
+      ),
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: AppColors.onSecondary,
+        hintText: widget.hintText,
+        hintStyle: TextStyle(
+          color: Colors.grey[400],
+          fontSize: 16,
+        ),
+        prefixIcon: Icon(Icons.lock, color: Colors.grey[400]),
+        suffixIcon: IconButton(
+          icon: Icon(
+            obsecured ? Icons.visibility_off : Icons.visibility,
+            color: Colors.grey[400],
           ),
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: AppColors.onSecondary,
-            hintText: hintText,
-            hintStyle: TextStyle(
-              color: Colors.grey[400],
-              fontSize: 16,
-            ),
-            prefixIcon: Icon(Icons.lock, color: Colors.grey[400]),
-            suffixIcon: IconButton(
-              icon: Icon(
-                passwordController.isObscure.value ? Icons.visibility_off : Icons.visibility,
-                color: Colors.grey[400],
-              ),
-              onPressed: passwordController.toggleVisibility,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: 14,
-              horizontal: 16,
-            ),
-          ),
-        ));
+          onPressed: () {
+            setState(() {
+              obsecured = !obsecured;
+            });
+          },
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 14,
+          horizontal: 16,
+        ),
+      ),
+    );
   }
 }

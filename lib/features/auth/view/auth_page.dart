@@ -2,30 +2,18 @@ import 'dart:developer';
 import 'package:aibuddy/core/constants/app_colors.dart';
 import 'package:aibuddy/core/extentions/validator_ext.dart';
 import 'package:aibuddy/core/mixin/validator.dart';
-import 'package:aibuddy/features/auth/presentation/controllers/auth_controller.dart';
-import 'package:aibuddy/features/auth/presentation/widgets/app_button.dart';
-import 'package:aibuddy/features/auth/presentation/widgets/app_text_field.dart';
-import 'package:aibuddy/features/auth/sign_up_page/presentation/pages/sign_up_page.dart';
-import 'package:aibuddy/features/chat_page/chat_screen.dart';
+import 'package:aibuddy/features/auth/controller/auth_controller.dart';
+import 'package:aibuddy/core/widgets/buttons/app_button.dart';
+import 'package:aibuddy/core/widgets/text_field/app_text_field.dart';
+import 'package:aibuddy/features/sign_up/binding/sign_up_binding.dart';
+import 'package:aibuddy/features/sign_up/view/sign_up_page.dart';
 import 'package:aibuddy/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AuthPage extends StatefulWidget {
+class AuthPage extends GetView<AuthController> with Validator {
   const AuthPage({super.key});
-
-  @override
-  State<AuthPage> createState() => _AuthPageState();
-}
-
-class _AuthPageState extends State<AuthPage> with Validator {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  AuthController authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +26,7 @@ class _AuthPageState extends State<AuthPage> with Validator {
           padding: EdgeInsets.only(left: width * 0.06, right: width * 0.06, top: height * 0.15),
           child: SingleChildScrollView(
             child: Form(
-              key: _formKey,
+              key: controller.formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -53,13 +41,11 @@ class _AuthPageState extends State<AuthPage> with Validator {
                           Text('Access to your\naccount', style: GoogleFonts.raleway(color: AppColors.secondary)),
                         ],
                       ),
-                      Image.asset(
-                        Assets.images.bott.path,
-                        height: height * 0.2,
-                      )
+                      Image.asset(Assets.images.bott.path, height: height * 0.2)
                     ],
                   ),
                   AppTextField(
+                    controller: controller.emailController.value,
                     hintText: 'Email',
                     validator: (value) {
                       String? emailValidation = value?.emailValidation;
@@ -68,11 +54,10 @@ class _AuthPageState extends State<AuthPage> with Validator {
                       }
                       return null;
                     },
-                    controller: emailController,
                   ),
                   SizedBox(height: height * 0.02),
                   AppTextField.password(
-                    controller: passwordController,
+                    controller: controller.passwordController.value,
                     hintText: 'Password',
                     validator: passwordValidator,
                   ),
@@ -80,7 +65,11 @@ class _AuthPageState extends State<AuthPage> with Validator {
                   AppButton(
                     onPressed: () {
                       log('Sign In button pressed');
-                      _formKey.currentState!.validate();
+                      controller.formKey.currentState!.validate();
+                      controller.signInWithEmailPassword(
+                        email: controller.emailController.value.text,
+                        password: controller.passwordController.value.text,
+                      );
                     },
                     buttonColor: AppColors.buttonColor,
                     title: 'Sign In',
@@ -92,10 +81,7 @@ class _AuthPageState extends State<AuthPage> with Validator {
                       )),
                   SizedBox(height: height * 0.02),
                   AppButton.iconTextButton(
-                    onPressed: () async {
-                      await authController.signInWithGoogle();
-                      Get.to(const ChatScreen());
-                    },
+                    onPressed: () => controller.signInWithGoogle(),
                     buttonColor: AppColors.onSecondary,
                     borderRadius: 30,
                     prefixIcon: Padding(
@@ -111,7 +97,7 @@ class _AuthPageState extends State<AuthPage> with Validator {
                     title: 'Continue with Google',
                   ),
                   AppButton.iconTextButton(
-                    onPressed: () => Get.off(SignUpPage()),
+                    onPressed: () => Get.off(const SignUpPage(), binding: SignUpBinding()),
                     buttonColor: AppColors.onSecondary,
                     borderRadius: 30,
                     prefixIcon: Padding(
