@@ -1,6 +1,6 @@
 import 'package:aibuddy/core/widgets/icon_container.dart';
 import 'package:aibuddy/core/widgets/recent_chat_tile.dart';
-import 'package:aibuddy/features/chat_page/chat_screen.dart';
+import 'package:aibuddy/features/chat_page/view/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

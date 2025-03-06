@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:aibuddy/core/services/auth_service.dart';
 import 'package:aibuddy/features/auth/binding/auth_binding.dart';
 import 'package:aibuddy/features/auth/view/auth_page.dart';
-import 'package:aibuddy/features/chat_page/chat_screen.dart';
+import 'package:aibuddy/features/chat_page/view/chat_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
