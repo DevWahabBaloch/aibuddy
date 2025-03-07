@@ -1,3 +1,4 @@
+import 'package:aibuddy/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ChatMessages extends StatelessWidget {
@@ -21,10 +22,14 @@ class ChatMessages extends StatelessWidget {
           children: [
             Text(
               sender,
+              style: TextStyle(color: AppColors.secondary, fontSize: 15.0, fontWeight: FontWeight.bold),
             ),
             Container(
               margin: const EdgeInsets.only(top: 5.0),
-              child: Text(text),
+              child: Text(
+                text,
+                style: TextStyle(color: AppColors.secondary, fontSize: 15.0, fontWeight: FontWeight.bold),
+              ),
             )
           ],
         ))
