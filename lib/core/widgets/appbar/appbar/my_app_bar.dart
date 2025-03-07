@@ -152,7 +152,7 @@ class _AppBar extends StatelessWidget {
         ),
       ),
       centerTitle: true, // Centers the title
-      backgroundColor: Colors.transparent, // Optional: customize as needed
+      backgroundColor: const Color(0xff0a1427), // Optional: customize as needed
       elevation: 0, // Optional: removes shadow
     );
   }

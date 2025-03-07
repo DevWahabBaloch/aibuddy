@@ -46,6 +46,7 @@ dependencies:
   cloud_firestore: ^5.6.5
   firebase_storage: ^12.4.4
   chat_gpt_sdk: ^3.1.4
+  flutter_gemini: ^3.0.0
 
 dev_dependencies:
   flutter_test:

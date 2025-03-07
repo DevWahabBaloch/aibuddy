@@ -33,7 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     _textController.clear();
 
-    final request = CompleteText(prompt: messages.text, model: Davinci002Model());
+    final request = CompleteText(prompt: messages.text, model: Gpt3TurboInstruct(), maxTokens: 200);
     final response = await chatGPT!.onCompletion(request: request);
     log(response!.choices[0].text);
     insertNewData(response.choices[0].text);
@@ -73,11 +73,25 @@ class _ChatScreenState extends State<ChatScreen> {
         padding: EdgeInsets.symmetric(horizontal: width * 0.03),
         child: Row(
           children: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.star, color: AppColors.secondary)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.image_rounded, color: AppColors.secondary)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.mic, color: AppColors.secondary)),
             Expanded(
-              child: TextField(
-                controller: _textController,
-                onTapOutside: (event) => FocusManager.instance.primaryFocus!.unfocus(),
-                decoration: const InputDecoration.collapsed(hintText: 'Send a message'),
+              child: Container(
+                height: height * 0.055,
+                width: width * 0.1,
+                decoration: BoxDecoration(color: const Color(0xff172032), borderRadius: BorderRadius.circular(30)),
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: width * 0.04),
+                    child: TextField(
+                      controller: _textController,
+                      onTapOutside: (event) => FocusManager.instance.primaryFocus!.unfocus(),
+                      decoration: const InputDecoration.collapsed(
+                          hintText: 'Ask me anything...', hintStyle: TextStyle(color: Colors.grey)),
+                    ),
+                  ),
+                ),
               ),
             ),
             IconButton(
@@ -108,10 +122,10 @@ class _ChatScreenState extends State<ChatScreen> {
             },
           )),
           Container(
-            height: height * 0.07,
+            height: height * 0.08,
             decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+              color: Color(0xff0a1427),
+            ),
             child: buildTextComposer(),
           )
         ],
