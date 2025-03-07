@@ -26,7 +26,7 @@ class AuthPage extends GetView<AuthController> with Validator {
           padding: EdgeInsets.only(left: width * 0.06, right: width * 0.06, top: height * 0.15),
           child: SingleChildScrollView(
             child: Form(
-              key: controller.formKey,
+              key: controller.authFormKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -65,7 +65,7 @@ class AuthPage extends GetView<AuthController> with Validator {
                   AppButton(
                     onPressed: () {
                       log('Sign In button pressed');
-                      controller.formKey.currentState!.validate();
+                      controller.authFormKey.currentState!.validate();
                       controller.signInWithEmailPassword(
                         email: controller.emailController.value.text,
                         password: controller.passwordController.value.text,

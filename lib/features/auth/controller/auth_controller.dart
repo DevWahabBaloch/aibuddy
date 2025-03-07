@@ -14,7 +14,7 @@ class AuthController extends GetxController {
   final emailController = TextEditingController().obs;
   final passwordController = TextEditingController().obs;
 
-  final formKey = GlobalKey<FormState>();
+  final authFormKey = GlobalKey<FormState>();
 
   signInWithEmailPassword({required String email, required String password}) {}
 

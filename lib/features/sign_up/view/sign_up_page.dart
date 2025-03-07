@@ -24,7 +24,7 @@ class SignUpPage extends GetView<SignUpController> {
         child: Padding(
           padding: EdgeInsets.only(left: width * 0.06, right: width * 0.06, top: height * 0.05),
           child: Form(
-            key: controller.formKey,
+            key: controller.SignupFormKey,
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -98,7 +98,7 @@ class SignUpPage extends GetView<SignUpController> {
                   AppButton(
                     onPressed: () {
                       log('Sign In button pressed');
-                      if (controller.formKey.currentState!.validate()) {
+                      if (controller.SignupFormKey.currentState!.validate()) {
                         controller.signUpWithEmailPassword(
                             username: controller.userNameController.value.text,
                             email: controller.emailController.value.text,

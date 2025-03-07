@@ -49,7 +49,7 @@ class SignUpController extends GetxController {
   final emailController = TextEditingController().obs;
   final passwordController = TextEditingController().obs;
 
-  final formKey = GlobalKey<FormState>();
+  final SignupFormKey = GlobalKey<FormState>();
 
   googleSignUp() async {
     UserCredential? userCredential = await AuthService.loginInWithGoogle();
