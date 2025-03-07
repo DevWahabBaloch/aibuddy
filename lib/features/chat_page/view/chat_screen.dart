@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:aibuddy/core/constants/app_colors.dart';
 import 'package:aibuddy/core/widgets/appbar/appbar/my_app_bar.dart';
 import 'package:aibuddy/features/chat_page/widgets/chat_messages.dart';
-import 'package:chat_gpt_sdk/chat_gpt_sdk.dart' as gpt;
+import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -15,22 +17,48 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final List<ChatMessages> _messages = [];
   final TextEditingController _textController = TextEditingController();
-  void _sendMessages() {
+
+  late OpenAI? chatGPT;
+  bool _isTyping = false;
+  bool _isImageSearch = false;
+
+  Future<void> _sendMessages() async {
     ChatMessages messages = ChatMessages(text: _textController.text, sender: 'AI Buddy');
     setState(() {
       _messages.insert(0, messages);
+      _isTyping = true;
     });
 
     _textController.clear();
+
+    final request = CompleteText(prompt: messages.text, model: Davinci002Model());
   }
 
+  @override
+  void initState() {
+    super.initState();
+    chatGPT = OpenAI.instance.build(
+        token: dotenv.env['CHATGPT_API_KEY'],
+        baseOption: HttpSetup(
+          receiveTimeout: const Duration(seconds: 8),
+        ),
+        enableLog: true);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
   // Instance Of OpenAI
-  final _openAI = gpt.OpenAI.instance.build(
-      token: dotenv.env['CHATGPT_API_KEY'],
-      baseOption: gpt.HttpSetup(
-        receiveTimeout: const Duration(seconds: 8),
-      ),
-      enableLog: true);
+  // final _openAI = gpt.OpenAI.instance.build(
+  //     token: dotenv.env['CHATGPT_API_KEY'],
+  //     baseOption: gpt.HttpSetup(
+  //       receiveTimeout: const Duration(seconds: 8),
+  //     ),
+  //     enableLog: true);
+
+  // // Access Chat Completion:
+  // final List<gpt.Messages> _messagesHistory = _messages.reversed.map().toList();
 
   @override
   Widget build(BuildContext context) {
