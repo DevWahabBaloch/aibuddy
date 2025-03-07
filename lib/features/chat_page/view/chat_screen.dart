@@ -25,7 +25,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<void> _sendMessages() async {
     if (_textController.text.isEmpty) return;
-    ChatMessages messages = ChatMessages(text: _textController.text, sender: 'AI Buddy');
+    ChatMessages messages = ChatMessages(text: _textController.text, sender: 'User');
     setState(() {
       _messages.insert(0, messages);
       _isTyping = true;
@@ -40,10 +40,10 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void insertNewData(String response) {
-    ChatMessages AIBuddyMessages = ChatMessages(text: response, sender: 'AI Buddy');
+    ChatMessages buddyMessages = ChatMessages(text: response, sender: 'AI Buddy');
     setState(() {
       _isTyping = false;
-      _messages.insert(0, AIBuddyMessages);
+      _messages.insert(0, buddyMessages);
     });
   }
 
@@ -62,16 +62,6 @@ class _ChatScreenState extends State<ChatScreen> {
   void dispose() {
     super.dispose();
   }
-  // Instance Of OpenAI
-  // final _openAI = gpt.OpenAI.instance.build(
-  //     token: dotenv.env['CHATGPT_API_KEY'],
-  //     baseOption: gpt.HttpSetup(
-  //       receiveTimeout: const Duration(seconds: 8),
-  //     ),
-  //     enableLog: true);
-
-  // // Access Chat Completion:
-  // final List<gpt.Messages> _messagesHistory = _messages.reversed.map().toList();
 
   @override
   Widget build(BuildContext context) {

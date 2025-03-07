@@ -76,6 +76,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/svgs/
+    - .env
 
   # assets:
   #   - images/a_dot_burr.jpeg
