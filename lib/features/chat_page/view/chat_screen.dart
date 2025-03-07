@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:aibuddy/core/constants/app_colors.dart';
 import 'package:aibuddy/core/widgets/appbar/appbar/my_app_bar.dart';
@@ -23,6 +24,7 @@ class _ChatScreenState extends State<ChatScreen> {
   bool _isImageSearch = false;
 
   Future<void> _sendMessages() async {
+    if (_textController.text.isEmpty) return;
     ChatMessages messages = ChatMessages(text: _textController.text, sender: 'AI Buddy');
     setState(() {
       _messages.insert(0, messages);
@@ -32,6 +34,17 @@ class _ChatScreenState extends State<ChatScreen> {
     _textController.clear();
 
     final request = CompleteText(prompt: messages.text, model: Davinci002Model());
+    final response = await chatGPT!.onCompletion(request: request);
+    log(response!.choices[0].text);
+    insertNewData(response.choices[0].text);
+  }
+
+  void insertNewData(String response) {
+    ChatMessages AIBuddyMessages = ChatMessages(text: response, sender: 'AI Buddy');
+    setState(() {
+      _isTyping = false;
+      _messages.insert(0, AIBuddyMessages);
+    });
   }
 
   @override
