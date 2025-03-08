@@ -1,12 +1,7 @@
-import 'dart:async';
-import 'dart:developer';
-
 import 'package:aibuddy/core/constants/app_colors.dart';
 import 'package:aibuddy/core/widgets/appbar/appbar/my_app_bar.dart';
 import 'package:aibuddy/features/chat_page/widgets/chat_messages.dart';
-import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -18,45 +13,6 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final List<ChatMessages> _messages = [];
   final TextEditingController _textController = TextEditingController();
-
-  late OpenAI? chatGPT;
-  bool _isTyping = false;
-  bool _isImageSearch = false;
-
-  Future<void> _sendMessages() async {
-    if (_textController.text.isEmpty) return;
-    ChatMessages messages = ChatMessages(text: _textController.text, sender: 'User');
-    setState(() {
-      _messages.insert(0, messages);
-      _isTyping = true;
-    });
-
-    _textController.clear();
-
-    final request = CompleteText(prompt: messages.text, model: Gpt3TurboInstruct(), maxTokens: 200);
-    final response = await chatGPT!.onCompletion(request: request);
-    log(response!.choices[0].text);
-    insertNewData(response.choices[0].text);
-  }
-
-  void insertNewData(String response) {
-    ChatMessages buddyMessages = ChatMessages(text: response, sender: 'AI Buddy');
-    setState(() {
-      _isTyping = false;
-      _messages.insert(0, buddyMessages);
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    chatGPT = OpenAI.instance.build(
-        token: dotenv.env['CHATGPT_API_KEY'],
-        baseOption: HttpSetup(
-          receiveTimeout: const Duration(seconds: 8),
-        ),
-        enableLog: true);
-  }
 
   @override
   void dispose() {
@@ -95,7 +51,8 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
             IconButton(
-                onPressed: () => _sendMessages(),
+                onPressed: () {},
+                // onPressed: () => _sendMessages(),
                 icon: const Icon(
                   Icons.send,
                   color: Colors.blue,
