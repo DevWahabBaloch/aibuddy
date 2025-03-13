@@ -4,6 +4,7 @@ import 'package:aibuddy/core/constants/app_colors.dart';
 import 'package:aibuddy/core/extentions/validator_ext.dart';
 import 'package:aibuddy/core/widgets/buttons/app_button.dart';
 import 'package:aibuddy/core/widgets/text_field/app_text_field.dart';
+import 'package:aibuddy/features/auth/view/auth_page.dart';
 import 'package:aibuddy/features/sign_up/controllers/sign_up_controller.dart';
 import 'package:aibuddy/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
@@ -97,12 +98,13 @@ class SignUpPage extends GetView<SignUpController> {
                   SizedBox(height: height * 0.02),
                   AppButton(
                     onPressed: () {
-                      log('Sign In button pressed');
+                      log('Sign up button pressed');
                       if (controller.SignupFormKey.currentState!.validate()) {
                         controller.signUpWithEmailPassword(
                             username: controller.userNameController.value.text,
                             email: controller.emailController.value.text,
                             password: controller.passwordController.value.text);
+                        Get.off(const AuthPage());
                       }
                     },
                     buttonColor: AppColors.buttonColor,

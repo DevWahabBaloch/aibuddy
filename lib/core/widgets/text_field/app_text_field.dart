@@ -1,22 +1,34 @@
-import 'package:aibuddy/core/constants/app_colors.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'package:aibuddy/core/constants/app_colors.dart';
 
 class AppTextField extends StatelessWidget {
   final Widget _child;
   AppTextField(
-      {super.key, required String hintText, final TextEditingController? controller, final String? Function(String?)? validator})
+      {super.key,
+      required String hintText,
+      final TextEditingController? controller,
+      final String? Function(String?)? validator,
+      TextInputType? keyboardType})
       : _child = _UsernameTextField(
           hintText: hintText,
           controller: controller,
+          keyboardType: keyboardType,
           validator: validator,
         );
 
   AppTextField.password(
-      {super.key, required String hintText, final TextEditingController? controller, final String? Function(String?)? validator})
+      {super.key,
+      required String hintText,
+      final TextEditingController? controller,
+      final String? Function(String?)? validator,
+      TextInputType? keyboardType})
       : _child = _PasswordTextField(
           hintText: hintText,
           controller: controller,
+          keyboardType: keyboardType,
           validator: validator,
         );
 
@@ -29,11 +41,13 @@ class AppTextField extends StatelessWidget {
 class _UsernameTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController? controller;
+  final TextInputType? keyboardType;
   final String? Function(String?)? validator;
 
   const _UsernameTextField({
     required this.hintText,
     this.controller,
+    this.keyboardType,
     this.validator,
   });
 
@@ -43,7 +57,7 @@ class _UsernameTextField extends StatelessWidget {
       onTapOutside: (event) => FocusManager.instance.primaryFocus!.unfocus(),
       controller: controller,
       validator: validator,
-      keyboardType: TextInputType.text,
+      keyboardType: keyboardType,
       style: const TextStyle(
         color: AppColors.secondary,
         fontSize: 16,
@@ -73,12 +87,14 @@ class _UsernameTextField extends StatelessWidget {
 class _PasswordTextField extends StatefulWidget {
   final String hintText;
   final TextEditingController? controller;
+  final TextInputType? keyboardType;
   final String? Function(String?)? validator;
 
   const _PasswordTextField({
     required this.hintText,
     this.controller,
     this.validator,
+    this.keyboardType,
   });
 
   @override
@@ -94,7 +110,7 @@ class _PasswordTextFieldState extends State<_PasswordTextField> {
       controller: widget.controller,
       validator: widget.validator,
       obscureText: obsecured,
-      keyboardType: TextInputType.text,
+      keyboardType: widget.keyboardType,
       style: const TextStyle(
         color: AppColors.secondary,
         fontSize: 16,

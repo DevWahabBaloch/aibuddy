@@ -44,6 +44,37 @@ class AuthService {
     }
   }
 
+  static Future<void> signUpWithEmailAndPassword(String userName, String email, String password) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    try {
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: email.trim(),
+        password: password,
+      );
+      log('User created successfully: ${userCredential.user?.uid}');
+    } on FirebaseAuthException catch (e) {
+      log('FirebaseAuthException: ${e.code} - ${e.message}');
+      String errorMessage;
+      switch (e.code) {
+        case 'weak-password':
+          errorMessage = 'The password is too weak.';
+          break;
+        case 'email-already-in-use':
+          errorMessage = 'This email is already registered.';
+          break;
+        case 'invalid-email':
+          errorMessage = 'The email address is invalid.';
+          break;
+        default:
+          errorMessage = e.message ?? 'An error occurred during signup.';
+      }
+      Get.snackbar('Signup Error', errorMessage, snackPosition: SnackPosition.BOTTOM);
+    } catch (e) {
+      log('Unexpected error: $e');
+      Get.snackbar('Error', 'An unexpected error occurred.', snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
   static Future<bool> signOutFromGoogle() async {
     try {
       await FirebaseAuth.instance.signOut();

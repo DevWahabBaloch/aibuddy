@@ -66,6 +66,8 @@ class SignUpController extends GetxController {
   }
 
   signUpWithEmailPassword({required String username, required String email, required String password}) {
-    AuthService.signInWithEmailAndPassword(username, email, password);
+    log('Attempting signup with: username=$username, email=$email, password=$password');
+    log('Calling signUpWithEmailAndPassword');
+    AuthService.signUpWithEmailAndPassword(username, email, password);
   }
 }

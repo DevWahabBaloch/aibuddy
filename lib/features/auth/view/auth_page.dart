@@ -5,6 +5,7 @@ import 'package:aibuddy/core/mixin/validator.dart';
 import 'package:aibuddy/features/auth/controller/auth_controller.dart';
 import 'package:aibuddy/core/widgets/buttons/app_button.dart';
 import 'package:aibuddy/core/widgets/text_field/app_text_field.dart';
+import 'package:aibuddy/features/chat_page/view/chat_screen.dart';
 import 'package:aibuddy/features/sign_up/binding/sign_up_binding.dart';
 import 'package:aibuddy/features/sign_up/view/sign_up_page.dart';
 import 'package:aibuddy/gen/assets.gen.dart';
@@ -54,12 +55,14 @@ class AuthPage extends GetView<AuthController> with Validator {
                       }
                       return null;
                     },
+                    keyboardType: TextInputType.emailAddress,
                   ),
                   SizedBox(height: height * 0.02),
                   AppTextField.password(
                     controller: controller.passwordController.value,
                     hintText: 'Password',
                     validator: passwordValidator,
+                    keyboardType: TextInputType.visiblePassword,
                   ),
                   SizedBox(height: height * 0.01),
                   AppButton(
@@ -70,6 +73,7 @@ class AuthPage extends GetView<AuthController> with Validator {
                         email: controller.emailController.value.text,
                         password: controller.passwordController.value.text,
                       );
+                      Get.to(const ChatScreen());
                     },
                     buttonColor: AppColors.buttonColor,
                     title: 'Sign In',
