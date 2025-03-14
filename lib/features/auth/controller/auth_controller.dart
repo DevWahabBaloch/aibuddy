@@ -16,7 +16,15 @@ class AuthController extends GetxController {
 
   final authFormKey = GlobalKey<FormState>();
 
-  signInWithEmailPassword({required String email, required String password}) {}
+  Future<bool> signInWithEmailPassword({required String email, required String password}) async {
+    try {
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+      return true;
+    } catch (e) {
+      log("Error during sign in: $e");
+      return false;
+    }
+  }
 
   signInWithGoogle() async {
     UserCredential? userCredential = await AuthService.loginInWithGoogle();

@@ -49,7 +49,7 @@ class SignUpController extends GetxController {
   final emailController = TextEditingController().obs;
   final passwordController = TextEditingController().obs;
 
-  final SignupFormKey = GlobalKey<FormState>();
+  final signupFormKey = GlobalKey<FormState>();
 
   googleSignUp() async {
     UserCredential? userCredential = await AuthService.loginInWithGoogle();
@@ -65,9 +65,28 @@ class SignUpController extends GetxController {
     }
   }
 
-  signUpWithEmailPassword({required String username, required String email, required String password}) {
-    log('Attempting signup with: username=$username, email=$email, password=$password');
-    log('Calling signUpWithEmailAndPassword');
-    AuthService.signUpWithEmailAndPassword(username, email, password);
+  Future<bool> signUpWithEmailPassword({
+    required String username,
+    required String email,
+    required String password,
+  }) async {
+    log('Attempting signup with: username=$username, email=$email');
+
+    try {
+      bool isSuccess = await AuthService.signUpWithEmailAndPassword(username, email, password);
+
+      if (isSuccess) {
+        user.value = FirebaseAuth.instance.currentUser;
+        log('Sign-Up Successful: ${user.value?.email}');
+        Get.offAll(const ChatScreen());
+        return true;
+      } else {
+        log('Sign-Up Failed');
+        return false;
+      }
+    } catch (e) {
+      log('Sign-Up Error: $e');
+      return false;
+    }
   }
 }

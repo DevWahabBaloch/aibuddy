@@ -5,6 +5,7 @@ import 'package:aibuddy/core/extentions/validator_ext.dart';
 import 'package:aibuddy/core/widgets/buttons/app_button.dart';
 import 'package:aibuddy/core/widgets/text_field/app_text_field.dart';
 import 'package:aibuddy/features/auth/view/auth_page.dart';
+import 'package:aibuddy/features/chat_page/view/chat_screen.dart';
 import 'package:aibuddy/features/sign_up/controllers/sign_up_controller.dart';
 import 'package:aibuddy/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class SignUpPage extends GetView<SignUpController> {
         child: Padding(
           padding: EdgeInsets.only(left: width * 0.06, right: width * 0.06, top: height * 0.05),
           child: Form(
-            key: controller.SignupFormKey,
+            key: controller.signupFormKey,
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -97,14 +98,17 @@ class SignUpPage extends GetView<SignUpController> {
                   ),
                   SizedBox(height: height * 0.02),
                   AppButton(
-                    onPressed: () {
+                    onPressed: () async {
                       log('Sign up button pressed');
-                      if (controller.SignupFormKey.currentState!.validate()) {
-                        controller.signUpWithEmailPassword(
+                      if (controller.signupFormKey.currentState!.validate()) {
+                        bool isAuthenticated = await controller.signUpWithEmailPassword(
                             username: controller.userNameController.value.text,
                             email: controller.emailController.value.text,
                             password: controller.passwordController.value.text);
-                        Get.off(const AuthPage());
+                        if (!isAuthenticated) {
+                          Get.snackbar("Error", "Invalid email or password",
+                              backgroundColor: Colors.red, colorText: Colors.white);
+                        }
                       }
                     },
                     buttonColor: AppColors.buttonColor,

@@ -46,7 +46,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1037952992835',
     projectId: 'aibuddy-app',
     authDomain: 'aibuddy-app.firebaseapp.com',
-    storageBucket: 'aibuddy-app.appspot.com',
+    storageBucket: 'aibuddy-app.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
     appId: '1:1037952992835:android:fef5148a5db85a45acf6f6',
     messagingSenderId: '1037952992835',
     projectId: 'aibuddy-app',
-    storageBucket: 'aibuddy-app.appspot.com',
+    storageBucket: 'aibuddy-app.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -62,7 +62,9 @@ class DefaultFirebaseOptions {
     appId: '1:1037952992835:ios:573d52a6cdb14328acf6f6',
     messagingSenderId: '1037952992835',
     projectId: 'aibuddy-app',
-    storageBucket: 'aibuddy-app.appspot.com',
+    storageBucket: 'aibuddy-app.firebasestorage.app',
+    androidClientId: '1037952992835-5ismp11v2d7989tg327menq73sqcf948.apps.googleusercontent.com',
+    iosClientId: '1037952992835-1qec792ffsmn6url9gqld9pjb81nm9mt.apps.googleusercontent.com',
     iosBundleId: 'com.example.aibuddy',
   );
 
@@ -71,7 +73,9 @@ class DefaultFirebaseOptions {
     appId: '1:1037952992835:ios:573d52a6cdb14328acf6f6',
     messagingSenderId: '1037952992835',
     projectId: 'aibuddy-app',
-    storageBucket: 'aibuddy-app.appspot.com',
+    storageBucket: 'aibuddy-app.firebasestorage.app',
+    androidClientId: '1037952992835-5ismp11v2d7989tg327menq73sqcf948.apps.googleusercontent.com',
+    iosClientId: '1037952992835-1qec792ffsmn6url9gqld9pjb81nm9mt.apps.googleusercontent.com',
     iosBundleId: 'com.example.aibuddy',
   );
 
@@ -81,6 +85,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1037952992835',
     projectId: 'aibuddy-app',
     authDomain: 'aibuddy-app.firebaseapp.com',
-    storageBucket: 'aibuddy-app.appspot.com',
+    storageBucket: 'aibuddy-app.firebasestorage.app',
   );
+
 }

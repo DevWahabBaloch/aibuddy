@@ -66,14 +66,20 @@ class AuthPage extends GetView<AuthController> with Validator {
                   ),
                   SizedBox(height: height * 0.01),
                   AppButton(
-                    onPressed: () {
+                    onPressed: () async {
                       log('Sign In button pressed');
-                      controller.authFormKey.currentState!.validate();
-                      controller.signInWithEmailPassword(
-                        email: controller.emailController.value.text,
-                        password: controller.passwordController.value.text,
-                      );
-                      Get.to(const ChatScreen());
+                      if (controller.authFormKey.currentState!.validate()) {
+                        bool isAuthenticated = await controller.signInWithEmailPassword(
+                          email: controller.emailController.value.text,
+                          password: controller.passwordController.value.text,
+                        );
+                        if (isAuthenticated) {
+                          Get.off(const ChatScreen());
+                        } else {
+                          Get.snackbar("Error", "Invalid email or password",
+                              backgroundColor: Colors.red, colorText: Colors.white);
+                        }
+                      }
                     },
                     buttonColor: AppColors.buttonColor,
                     title: 'Sign In',

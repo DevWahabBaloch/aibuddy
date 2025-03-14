@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "1037952992835",
     "project_id": "aibuddy-app",
-    "storage_bucket": "aibuddy-app.appspot.com"
+    "storage_bucket": "aibuddy-app.firebasestorage.app"
   },
   "client": [
     {
@@ -12,7 +12,20 @@
           "package_name": "com.example.aibuddy"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1037952992835-5ismp11v2d7989tg327menq73sqcf948.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aibuddy",
+            "certificate_hash": "17fd66b5c61161e45f53b8db1efa8846f1ba1aea"
+          }
+        },
+        {
+          "client_id": "1037952992835-t1m5j1dpe3c5rgv6t1phqtiqkhml06s1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAZYT9bwiciSHkxlY2C9T50HeI4v5R32QU"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1037952992835-t1m5j1dpe3c5rgv6t1phqtiqkhml06s1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1037952992835-1qec792ffsmn6url9gqld9pjb81nm9mt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.aibuddy"
+              }
+            }
+          ]
         }
       }
     }
