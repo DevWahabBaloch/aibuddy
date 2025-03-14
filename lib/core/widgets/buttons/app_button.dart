@@ -103,7 +103,6 @@ class _IconTextButton extends StatelessWidget {
       onTap: onPressed,
       borderRadius: BorderRadius.circular(borderRadius ?? 8),
       child: SizedBox(
-        width: double.infinity,
         height: height * 0.07,
         child: Card(
           color: buttonColor ?? AppColors.buttonColor,
@@ -114,12 +113,16 @@ class _IconTextButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               prefixIcon,
-              SizedBox(width: width * 0.17),
-              Text(
-                title,
-                style: GoogleFonts.roboto(color: AppColors.secondary),
-                textAlign: TextAlign.center,
+              Expanded(
+                child: Center(
+                  child: Text(
+                    title,
+                    style: GoogleFonts.roboto(color: AppColors.secondary),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
+              SizedBox(width: width * 0.08)
             ],
           ),
         ),

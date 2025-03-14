@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   Rx<User?> user = Rx<User?>(FirebaseAuth.instance.currentUser);
   final emailController = TextEditingController().obs;
   final passwordController = TextEditingController().obs;
@@ -18,7 +18,7 @@ class AuthController extends GetxController {
 
   Future<bool> signInWithEmailPassword({required String email, required String password}) async {
     try {
-      await auth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
       return true;
     } catch (e) {
       log("Error during sign in: $e");
