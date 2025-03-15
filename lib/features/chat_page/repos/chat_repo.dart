@@ -11,7 +11,13 @@ class ChatRepo {
 
       final requestData = {
         "contents": previousMessages.map((e) => e.toMap()).toList(),
-        "generationConfig": {"temperature": 0.9, "topP": 0.95, "maxOutputTokens": 8192, "responseMimeType": "text/plain"}
+        "generationConfig": {
+          "temperature": 2,
+          "topK": 40,
+          "topP": 0.95,
+          "maxOutputTokens": 8192,
+          "responseMimeType": "text/plain"
+        }
       };
       log('Request: ${requestData.toString()}');
 
