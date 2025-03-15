@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:aibuddy/core/services/auth_service.dart';
 import 'package:aibuddy/features/auth/binding/auth_binding.dart';
 import 'package:aibuddy/features/auth/view/auth_page.dart';
+import 'package:aibuddy/features/chat_page/binding/chat_binding.dart';
 import 'package:aibuddy/features/chat_page/view/chat_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +32,7 @@ class AuthController extends GetxController {
     if (userCredential != null) {
       log('userCredential == $userCredential .. ${userCredential.additionalUserInfo}.. ${userCredential.user!.email}');
       user.value = userCredential.user;
-      Get.offAll(
-        const ChatScreen(),
-        // binding
-      );
+      Get.offAll(const ChatScreen(), binding: ChatBinding());
     } else {
       Get.offAll(const AuthPage(), binding: AuthBinding());
     }

@@ -13,9 +13,8 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final List<ChatMessages> _messages = [];
   final TextEditingController _textController = TextEditingController();
-  final ChatController chatController = Get.find<ChatController>();
+  final ChatController chatController = Get.put(ChatController());
 
   @override
   void dispose() {
@@ -45,6 +44,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     padding: EdgeInsets.only(left: width * 0.04),
                     child: TextField(
                       controller: _textController,
+                      textInputAction: TextInputAction.send,
                       style: const TextStyle(color: Colors.white),
                       onTapOutside: (event) => FocusManager.instance.primaryFocus!.unfocus(),
                       decoration: const InputDecoration.collapsed(
@@ -80,12 +80,11 @@ class _ChatScreenState extends State<ChatScreen> {
           Flexible(
               child: Obx(
             () => ListView.builder(
-              reverse: true,
               physics: const BouncingScrollPhysics(),
               itemCount: chatController.messages.length,
               itemBuilder: (context, index) {
                 final messages = chatController.messages[index];
-                return ChatMessages(text: messages.parts[0].text, sender: messages.role == 'user' ? 'You' : 'AI Buddy');
+                return ChatMessages(text: messages.parts[0].text, sender: messages.role);
               },
             ),
           )),

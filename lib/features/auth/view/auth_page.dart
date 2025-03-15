@@ -5,6 +5,7 @@ import 'package:aibuddy/core/mixin/validator.dart';
 import 'package:aibuddy/features/auth/controller/auth_controller.dart';
 import 'package:aibuddy/core/widgets/buttons/app_button.dart';
 import 'package:aibuddy/core/widgets/text_field/app_text_field.dart';
+import 'package:aibuddy/features/chat_page/binding/chat_binding.dart';
 import 'package:aibuddy/features/chat_page/view/chat_screen.dart';
 import 'package:aibuddy/features/sign_up/binding/sign_up_binding.dart';
 import 'package:aibuddy/features/sign_up/view/sign_up_page.dart';
@@ -74,7 +75,7 @@ class AuthPage extends GetView<AuthController> with Validator {
                           password: controller.passwordController.value.text,
                         );
                         if (isAuthenticated) {
-                          Get.off(const ChatScreen());
+                          Get.off(const ChatScreen(), binding: ChatBinding());
                         } else {
                           Get.snackbar("Error", "Invalid email or password",
                               backgroundColor: Colors.red, colorText: Colors.white);

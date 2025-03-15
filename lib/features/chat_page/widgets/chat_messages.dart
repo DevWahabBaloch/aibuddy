@@ -4,36 +4,64 @@ import 'package:flutter/material.dart';
 class ChatMessages extends StatelessWidget {
   final String text;
   final String sender;
+
   const ChatMessages({super.key, required this.text, required this.sender});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
+    bool isUser = sender == 'user'; // Check if sender is 'user'
+
+    // Build the list of widgets
+    List<Widget> messageWidgets = [];
+
+    // Model message: avatar on the left
+    if (!isUser) {
+      messageWidgets.add(
         Container(
-          margin: const EdgeInsets.only(right: 16.0),
-          child: CircleAvatar(
-            child: Text(sender[0]),
+          margin: const EdgeInsets.only(left: 8.0, right: 8.0),
+          child: const CircleAvatar(
+            child: Text('M'), // 'M' for model
           ),
         ),
-        Expanded(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              sender,
-              style: TextStyle(color: AppColors.secondary, fontSize: 15.0, fontWeight: FontWeight.bold),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 5.0),
-              child: Text(
-                text,
-                style: TextStyle(color: AppColors.secondary, fontSize: 15.0, fontWeight: FontWeight.bold),
+      );
+    }
+
+    // Add the message card
+    messageWidgets.add(
+      Flexible(
+        child: Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          color: isUser ? Colors.blue : Colors.grey, // Blue for user, grey for model
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              text,
+              style: const TextStyle(
+                color: AppColors.secondary,
+                fontSize: 15.0,
+                fontWeight: FontWeight.bold,
               ),
-            )
-          ],
-        ))
-      ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // User message: avatar on the right
+    if (isUser) {
+      messageWidgets.add(
+        Container(
+          margin: const EdgeInsets.only(left: 8.0, right: 8.0),
+          child: const CircleAvatar(
+            child: Text('U'), // 'U' for user
+          ),
+        ),
+      );
+    }
+
+    return Row(
+      mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+      children: messageWidgets,
     );
   }
 }

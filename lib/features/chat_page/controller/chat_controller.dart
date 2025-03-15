@@ -14,7 +14,7 @@ class ChatController extends GetxController {
     try {
       String response = await ChatRepo.chatTextGenerationRepo(messages);
 
-      messages.add(ChatModel(role: 'AI Buddy', parts: [ChatPartModel(text: response)]));
+      messages.add(ChatModel(role: 'model', parts: [ChatPartModel(text: response)]));
     } catch (e) {
       Get.snackbar('Error', 'Failed to get response: $e');
     } finally {
