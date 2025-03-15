@@ -16,7 +16,7 @@ class ChatMessages extends StatelessWidget {
     if (!isUser) {
       messageWidgets.add(
         Container(
-          margin: const EdgeInsets.only(left: 8.0, right: 8.0),
+          margin: const EdgeInsets.symmetric(horizontal: 10.0),
           child: const CircleAvatar(
             child: Text('M'),
           ),
@@ -30,7 +30,7 @@ class ChatMessages extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           color: isUser ? Colors.blue : Colors.grey,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(10.0),
             child: Text(
               text,
               style: const TextStyle(
@@ -47,7 +47,7 @@ class ChatMessages extends StatelessWidget {
     if (isUser) {
       messageWidgets.add(
         Container(
-          margin: const EdgeInsets.only(left: 8.0, right: 8.0),
+          margin: const EdgeInsets.symmetric(horizontal: 10.0),
           child: const CircleAvatar(
             child: Text('U'),
           ),

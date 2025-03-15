@@ -9,74 +9,6 @@
 
 import 'package:flutter/widgets.dart';
 
-class $AssetsFontsGen {
-  const $AssetsFontsGen();
-
-  /// File path: assets/fonts/JosefinSans-Bold.ttf
-  String get josefinSansBold => 'assets/fonts/JosefinSans-Bold.ttf';
-
-  /// File path: assets/fonts/JosefinSans-BoldItalic.ttf
-  String get josefinSansBoldItalic => 'assets/fonts/JosefinSans-BoldItalic.ttf';
-
-  /// File path: assets/fonts/JosefinSans-ExtraLight.ttf
-  String get josefinSansExtraLight => 'assets/fonts/JosefinSans-ExtraLight.ttf';
-
-  /// File path: assets/fonts/JosefinSans-ExtraLightItalic.ttf
-  String get josefinSansExtraLightItalic =>
-      'assets/fonts/JosefinSans-ExtraLightItalic.ttf';
-
-  /// File path: assets/fonts/JosefinSans-Italic.ttf
-  String get josefinSansItalic => 'assets/fonts/JosefinSans-Italic.ttf';
-
-  /// File path: assets/fonts/JosefinSans-Light.ttf
-  String get josefinSansLight => 'assets/fonts/JosefinSans-Light.ttf';
-
-  /// File path: assets/fonts/JosefinSans-LightItalic.ttf
-  String get josefinSansLightItalic =>
-      'assets/fonts/JosefinSans-LightItalic.ttf';
-
-  /// File path: assets/fonts/JosefinSans-Medium.ttf
-  String get josefinSansMedium => 'assets/fonts/JosefinSans-Medium.ttf';
-
-  /// File path: assets/fonts/JosefinSans-MediumItalic.ttf
-  String get josefinSansMediumItalic =>
-      'assets/fonts/JosefinSans-MediumItalic.ttf';
-
-  /// File path: assets/fonts/JosefinSans-Regular.ttf
-  String get josefinSansRegular => 'assets/fonts/JosefinSans-Regular.ttf';
-
-  /// File path: assets/fonts/JosefinSans-SemiBold.ttf
-  String get josefinSansSemiBold => 'assets/fonts/JosefinSans-SemiBold.ttf';
-
-  /// File path: assets/fonts/JosefinSans-SemiBoldItalic.ttf
-  String get josefinSansSemiBoldItalic =>
-      'assets/fonts/JosefinSans-SemiBoldItalic.ttf';
-
-  /// File path: assets/fonts/JosefinSans-Thin.ttf
-  String get josefinSansThin => 'assets/fonts/JosefinSans-Thin.ttf';
-
-  /// File path: assets/fonts/JosefinSans-ThinItalic.ttf
-  String get josefinSansThinItalic => 'assets/fonts/JosefinSans-ThinItalic.ttf';
-
-  /// List of all assets
-  List<String> get values => [
-        josefinSansBold,
-        josefinSansBoldItalic,
-        josefinSansExtraLight,
-        josefinSansExtraLightItalic,
-        josefinSansItalic,
-        josefinSansLight,
-        josefinSansLightItalic,
-        josefinSansMedium,
-        josefinSansMediumItalic,
-        josefinSansRegular,
-        josefinSansSemiBold,
-        josefinSansSemiBoldItalic,
-        josefinSansThin,
-        josefinSansThinItalic
-      ];
-}
-
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
@@ -156,7 +88,6 @@ class Assets {
   Assets._();
 
   static const String aEnv = '.env';
-  static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsSvgsGen svgs = $AssetsSvgsGen();
