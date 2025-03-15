@@ -4,5 +4,7 @@ import 'package:flutter/material.dart';
 sealed class ChatEvent {}
 
 class ChatGenerateNewTextMessageEvent extends ChatEvent {
-  // final String inputMessage;
+  final String inputMessage;
+
+  ChatGenerateNewTextMessageEvent({required this.inputMessage});
 }

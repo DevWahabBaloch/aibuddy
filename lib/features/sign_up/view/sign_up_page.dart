@@ -4,8 +4,6 @@ import 'package:aibuddy/core/constants/app_colors.dart';
 import 'package:aibuddy/core/extentions/validator_ext.dart';
 import 'package:aibuddy/core/widgets/buttons/app_button.dart';
 import 'package:aibuddy/core/widgets/text_field/app_text_field.dart';
-import 'package:aibuddy/features/auth/view/auth_page.dart';
-import 'package:aibuddy/features/chat_page/view/chat_screen.dart';
 import 'package:aibuddy/features/sign_up/controllers/sign_up_controller.dart';
 import 'package:aibuddy/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +91,8 @@ class SignUpPage extends GetView<SignUpController> {
                   ),
                   SizedBox(height: height * 0.02),
                   Text(
-                    'By signing you agree the Terms of Service and Privacy Policy.\nincluding Cookie Use',
+                    'By signing you agree the Terms of Service and Privacy Policy.\nIncluding Cookie Use',
+                    overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.roboto(color: AppColors.secondary, fontSize: 11),
                   ),
                   SizedBox(height: height * 0.02),

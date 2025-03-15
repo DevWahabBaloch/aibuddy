@@ -1,7 +1,12 @@
+import 'package:aibuddy/config/bloc/chat_bloc.dart';
+import 'package:aibuddy/config/bloc/chat_event.dart';
+import 'package:aibuddy/config/bloc/chat_state.dart';
 import 'package:aibuddy/core/constants/app_colors.dart';
 import 'package:aibuddy/core/widgets/appbar/appbar/my_app_bar.dart';
+import 'package:aibuddy/features/chat_page/models/chat_model.dart';
 import 'package:aibuddy/features/chat_page/widgets/chat_messages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -12,6 +17,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final List<ChatMessages> _messages = [];
+  final ChatBloc chatBloc = ChatBloc();
   final TextEditingController _textController = TextEditingController();
 
   @override
@@ -42,6 +48,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     padding: EdgeInsets.only(left: width * 0.04),
                     child: TextField(
                       controller: _textController,
+                      style: const TextStyle(color: Colors.white),
                       onTapOutside: (event) => FocusManager.instance.primaryFocus!.unfocus(),
                       decoration: const InputDecoration.collapsed(
                           hintText: 'Ask me anything...', hintStyle: TextStyle(color: Colors.grey)),
@@ -51,7 +58,11 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (_textController.text.isNotEmpty) {
+                    chatBloc.add(ChatGenerateNewTextMessageEvent(inputMessage: _textController.text));
+                  }
+                },
                 // onPressed: () => _sendMessages(),
                 icon: const Icon(
                   Icons.send,
@@ -67,25 +78,39 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: MyAppBar(
         title: 'AI Buddy',
       ),
-      body: Column(
-        children: [
-          Flexible(
-              child: ListView.builder(
-            reverse: true,
-            physics: const BouncingScrollPhysics(),
-            itemCount: _messages.length,
-            itemBuilder: (context, index) {
-              return _messages[index];
-            },
-          )),
-          Container(
-            height: height * 0.08,
-            decoration: const BoxDecoration(
-              color: Color(0xff0a1427),
-            ),
-            child: buildTextComposer(),
-          )
-        ],
+      body: BlocConsumer<ChatBloc, ChatState>(
+        bloc: chatBloc,
+        listener: (context, state) {
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          switch (state.runtimeType) {
+            case ChatSuccessState _:
+              List<ChatModel> messages = (state as ChatSuccessState).messages;
+              return Column(
+                children: [
+                  Flexible(
+                      child: ListView.builder(
+                    reverse: true,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: _messages.length,
+                    itemBuilder: (context, index) {
+                      return _messages[index];
+                    },
+                  )),
+                  Container(
+                    height: height * 0.08,
+                    decoration: const BoxDecoration(
+                      color: Color(0xff0a1427),
+                    ),
+                    child: buildTextComposer(),
+                  )
+                ],
+              );
+            default:
+              return const SizedBox();
+          }
+        },
       ),
     );
   }
