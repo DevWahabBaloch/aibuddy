@@ -1,5 +1,6 @@
 import 'package:aibuddy/core/constants/app_colors.dart';
 import 'package:aibuddy/core/widgets/appbar/appbar/my_app_bar.dart';
+import 'package:aibuddy/core/widgets/jumping_dots/jumping_dots.dart';
 import 'package:aibuddy/features/chat_page/controller/chat_controller.dart';
 import 'package:aibuddy/features/chat_page/widgets/chat_messages.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +16,23 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textController = TextEditingController();
   final ChatController chatController = Get.put(ChatController());
+  final FocusNode _focusNode = FocusNode();
+  bool _isTextFieldFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      setState(() {
+        _isTextFieldFocused = _focusNode.hasFocus;
+      });
+    });
+  }
 
   @override
   void dispose() {
     _textController.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -31,41 +45,64 @@ class _ChatScreenState extends State<ChatScreen> {
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: width * 0.03),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.star, color: AppColors.secondary)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.image_rounded, color: AppColors.secondary)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.mic, color: AppColors.secondary)),
+            if (!_isTextFieldFocused)
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.star, color: AppColors.secondary),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.image_rounded, color: AppColors.secondary),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.mic, color: AppColors.secondary),
+                  ),
+                ],
+              ),
             Expanded(
-              child: Container(
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeOut,
                 height: height * 0.055,
-                width: width * 0.1,
-                decoration: BoxDecoration(color: const Color(0xff172032), borderRadius: BorderRadius.circular(30)),
+                // width: _isTextFieldFocused ? width * 0.81 : width * 0.47,
+                decoration: BoxDecoration(
+                  color: const Color(0xff172032),
+                  borderRadius: BorderRadius.circular(30),
+                ),
                 child: Center(
                   child: Padding(
                     padding: EdgeInsets.only(left: width * 0.04),
                     child: TextField(
                       controller: _textController,
+                      focusNode: _focusNode,
                       textInputAction: TextInputAction.send,
                       style: const TextStyle(color: Colors.white),
                       onTapOutside: (event) => FocusManager.instance.primaryFocus!.unfocus(),
                       decoration: const InputDecoration.collapsed(
-                          hintText: 'Ask me anything...', hintStyle: TextStyle(color: Colors.grey)),
+                        hintText: 'Ask me anything...',
+                        hintStyle: TextStyle(color: Colors.grey),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
             IconButton(
-                onPressed: () {
-                  if (_textController.text.isNotEmpty) {
-                    chatController.sendMessages(_textController.text);
-                    _textController.clear();
-                  }
-                },
-                icon: const Icon(
-                  Icons.send,
-                  color: Colors.blue,
-                ))
+              onPressed: () {
+                if (_textController.text.isNotEmpty) {
+                  chatController.sendMessages(_textController.text);
+                  _textController.clear();
+                  _focusNode.unfocus();
+                }
+              },
+              icon: const Icon(Icons.send, color: Colors.blue),
+            ),
           ],
         ),
       );
@@ -79,21 +116,22 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Column(
         children: [
           Flexible(
-              child: Obx(
-            () => ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: chatController.messages.length,
-              itemBuilder: (context, index) {
-                final messages = chatController.messages[index];
-                return ChatMessages(text: messages.parts[0].text, sender: messages.role);
-              },
+            child: Obx(
+              () => ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: chatController.messages.length,
+                itemBuilder: (context, index) {
+                  final messages = chatController.messages[index];
+                  return ChatMessages(text: messages.parts.first.text, sender: messages.role);
+                },
+              ),
             ),
-          )),
+          ),
           Obx(
             () => chatController.isLoading.value
                 ? const Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(),
+                    child: JumpingDots(),
                   )
                 : const SizedBox(),
           ),
@@ -103,7 +141,7 @@ class _ChatScreenState extends State<ChatScreen> {
               color: Color(0xff0a1427),
             ),
             child: buildTextComposer(),
-          )
+          ),
         ],
       ),
     );

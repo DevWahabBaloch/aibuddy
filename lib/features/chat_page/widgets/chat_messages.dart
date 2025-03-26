@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:aibuddy/core/constants/app_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatMessages extends StatelessWidget {
@@ -10,15 +13,17 @@ class ChatMessages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isUser = sender == 'user';
+    final User? user = FirebaseAuth.instance.currentUser;
 
     List<Widget> messageWidgets = [];
 
     if (!isUser) {
       messageWidgets.add(
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10.0),
+          padding: const EdgeInsets.all(15.0),
+          // margin: const EdgeInsets.symmetric(horizontal: 10.0),
           child: const CircleAvatar(
-            child: Text('M'),
+            child: Text('AI Buddy', style: TextStyle(fontSize: 10)),
           ),
         ),
       );
@@ -47,9 +52,10 @@ class ChatMessages extends StatelessWidget {
     if (isUser) {
       messageWidgets.add(
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: const CircleAvatar(
-            child: Text('U'),
+          padding: const EdgeInsets.all(15.0),
+          // margin: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: CircleAvatar(
+            child: Text(user!.displayName ?? 'User', style: const TextStyle(fontSize: 10)),
           ),
         ),
       );
