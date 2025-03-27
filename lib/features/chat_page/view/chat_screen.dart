@@ -81,7 +81,10 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: TextField(
                       controller: _textController,
                       focusNode: _focusNode,
-                      textInputAction: TextInputAction.send,
+                      textInputAction: TextInputAction.newline,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      minLines: 1,
                       style: const TextStyle(color: Colors.white),
                       onTapOutside: (event) => FocusManager.instance.primaryFocus!.unfocus(),
                       decoration: const InputDecoration.collapsed(
@@ -114,6 +117,7 @@ class _ChatScreenState extends State<ChatScreen> {
         title: 'AI Buddy',
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Flexible(
             child: Obx(
@@ -130,7 +134,7 @@ class _ChatScreenState extends State<ChatScreen> {
           Obx(
             () => chatController.isLoading.value
                 ? const Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: EdgeInsets.only(left: 20, bottom: 20),
                     child: JumpingDots(),
                   )
                 : const SizedBox(),
