@@ -97,7 +97,6 @@
 
 import 'package:aibuddy/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget _child;
@@ -105,7 +104,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   MyAppBar({
     super.key,
     required final String title,
-  }) : _child = _AppBar(title: title);
+    final VoidCallback? onTap,
+  }) : _child = _AppBar(
+          title: title,
+          onTap: onTap,
+        );
 
   MyAppBar.noBackBtn({
     super.key,
@@ -118,14 +121,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class _AppBar extends StatelessWidget {
   final String title;
-
-  const _AppBar({required this.title});
+  final VoidCallback? onTap;
+  const _AppBar({required this.title, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -133,13 +135,14 @@ class _AppBar extends StatelessWidget {
     double width = MediaQuery.sizeOf(context).width;
     return AppBar(
       leading: GestureDetector(
-        onTap: () => Get.back(),
+        onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(12.0), // Adjust padding for better tap area
+          padding: const EdgeInsets.all(14.0),
           child: Image.asset(
-            Assets.icons.chevron.path,
-            height: height * 0.03,
+            Assets.images.icMenu.path,
+            height: height * 0.025,
             color: Colors.white,
+            fit: BoxFit.contain,
           ),
         ),
       ),
@@ -151,9 +154,18 @@ class _AppBar extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      centerTitle: true, // Centers the title
-      backgroundColor: const Color(0xff0a1427), // Optional: customize as needed
-      elevation: 0, // Optional: removes shadow
+      actions: [
+        Image.asset(
+          Assets.images.icEdit.path,
+          color: Colors.white,
+          height: height * 0.03,
+          fit: BoxFit.contain,
+        ),
+        SizedBox(width: width * 0.02)
+      ],
+      centerTitle: true,
+      backgroundColor: const Color(0xff0a1427),
+      elevation: 0,
     );
   }
 }
@@ -171,7 +183,7 @@ class _NoBackButtonAppBar extends StatelessWidget {
         style: const TextStyle(
           fontSize: 18.0,
           fontWeight: FontWeight.w700,
-          color: Colors.black, // Changed to black for visibility; adjust as needed
+          color: Colors.black,
         ),
       ),
       centerTitle: true,

@@ -47,6 +47,7 @@ dependencies:
   firebase_storage: ^12.4.4
   # flutter_gemini: ^3.0.0
   dio: ^5.8.0+1
+  firebase_database: ^11.3.4
 
 dev_dependencies:
   flutter_test:

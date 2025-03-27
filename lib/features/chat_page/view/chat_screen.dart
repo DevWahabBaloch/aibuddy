@@ -2,7 +2,10 @@ import 'package:aibuddy/core/constants/app_colors.dart';
 import 'package:aibuddy/core/widgets/appbar/appbar/my_app_bar.dart';
 import 'package:aibuddy/core/widgets/jumping_dots/jumping_dots.dart';
 import 'package:aibuddy/features/chat_page/controller/chat_controller.dart';
+import 'package:aibuddy/features/chat_page/widgets/app_drawer.dart';
 import 'package:aibuddy/features/chat_page/widgets/chat_messages.dart';
+import 'package:aibuddy/gen/assets.gen.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,8 +19,12 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textController = TextEditingController();
   final ChatController chatController = Get.put(ChatController());
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final FocusNode _focusNode = FocusNode();
   bool _isTextFieldFocused = false;
+
+  // Realtime Database Using Firebase:
+  final _databaseReferenceToStoreChats = FirebaseDatabase.instance.ref('saved_chats');
 
   @override
   void initState() {
@@ -102,6 +109,13 @@ class _ChatScreenState extends State<ChatScreen> {
                   chatController.sendMessages(_textController.text);
                   _textController.clear();
                   _focusNode.unfocus();
+                  _databaseReferenceToStoreChats.child(DateTime.now().millisecondsSinceEpoch.toString()).set({
+                    'savedChat': _textController.text.toString(),
+                  }).onError(
+                    (error, stackTrace) => Get.showSnackbar(GetSnackBar(
+                      message: 'Error While Saving Chat: $error',
+                    )),
+                  );
                 }
               },
               icon: const Icon(Icons.send, color: Colors.blue),
@@ -112,10 +126,13 @@ class _ChatScreenState extends State<ChatScreen> {
     }
 
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: AppColors.primary,
       appBar: MyAppBar(
         title: 'AI Buddy',
+        onTap: () => _scaffoldKey.currentState!.openDrawer(),
       ),
+      drawer: const AppDrawer(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

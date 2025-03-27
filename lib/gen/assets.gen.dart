@@ -44,6 +44,12 @@ class $AssetsImagesGen {
   AssetGenImage get googleicon =>
       const AssetGenImage('assets/images/googleicon.png');
 
+  /// File path: assets/images/ic_edit.png
+  AssetGenImage get icEdit => const AssetGenImage('assets/images/ic_edit.png');
+
+  /// File path: assets/images/ic_menu.png
+  AssetGenImage get icMenu => const AssetGenImage('assets/images/ic_menu.png');
+
   /// File path: assets/images/im1.png
   AssetGenImage get im1 => const AssetGenImage('assets/images/im1.png');
 
@@ -64,8 +70,18 @@ class $AssetsImagesGen {
   AssetGenImage get userP => const AssetGenImage('assets/images/user_p.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [bott, googleicon, im1, messages, padlock, unlock, user, userP];
+  List<AssetGenImage> get values => [
+        bott,
+        googleicon,
+        icEdit,
+        icMenu,
+        im1,
+        messages,
+        padlock,
+        unlock,
+        user,
+        userP
+      ];
 }
 
 class $AssetsSvgsGen {
@@ -80,8 +96,11 @@ class $AssetsSvgsGen {
   /// File path: assets/svgs/bot3.svg
   String get bot3 => 'assets/svgs/bot3.svg';
 
+  /// File path: assets/svgs/search_icon.svg
+  String get searchIcon => 'assets/svgs/search_icon.svg';
+
   /// List of all assets
-  List<String> get values => [bot1, bot2, bot3];
+  List<String> get values => [bot1, bot2, bot3, searchIcon];
 }
 
 class Assets {
