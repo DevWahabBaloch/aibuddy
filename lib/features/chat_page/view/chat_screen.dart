@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:aibuddy/core/constants/app_colors.dart';
 import 'package:aibuddy/core/widgets/appbar/appbar/my_app_bar.dart';
 import 'package:aibuddy/core/widgets/jumping_dots/jumping_dots.dart';
 import 'package:aibuddy/features/chat_page/controller/chat_controller.dart';
 import 'package:aibuddy/features/chat_page/widgets/app_drawer.dart';
 import 'package:aibuddy/features/chat_page/widgets/chat_messages.dart';
-import 'package:aibuddy/gen/assets.gen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,6 +27,35 @@ class _ChatScreenState extends State<ChatScreen> {
 
   // Realtime Database Using Firebase:
   final _databaseReferenceToStoreChats = FirebaseDatabase.instance.ref('saved_chats');
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  void saveMessageToFirebase(String message) async {
+    User? user = _auth.currentUser;
+
+    if (user != null) {
+      final messageId = DateTime.now().millisecondsSinceEpoch.toString();
+
+      await _databaseReferenceToStoreChats.child(user.uid).child(messageId).set({
+        'role': 'user',
+        'text': message,
+      });
+
+      try {
+        String aiResponse = await chatController.sendMessages(message);
+
+        if (aiResponse.isNotEmpty) {
+          await _databaseReferenceToStoreChats.child(user.uid).child('${messageId}_bot').set({
+            'role': 'model',
+            'text': aiResponse,
+          });
+        }
+      } catch (e) {
+        log("Failed to fetch AI response: $e");
+      }
+    } else {
+      log("User not authenticated!");
+    }
+  }
 
   @override
   void initState() {
@@ -50,9 +81,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
     Widget buildTextComposer() {
       return Padding(
-        padding: EdgeInsets.symmetric(horizontal: width * 0.03),
+        padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: height * 0.01),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             if (!_isTextFieldFocused)
               Row(
@@ -76,8 +107,6 @@ class _ChatScreenState extends State<ChatScreen> {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 500),
                 curve: Curves.easeOut,
-                height: height * 0.055,
-                // width: _isTextFieldFocused ? width * 0.81 : width * 0.47,
                 decoration: BoxDecoration(
                   color: const Color(0xff172032),
                   borderRadius: BorderRadius.circular(30),
@@ -90,14 +119,12 @@ class _ChatScreenState extends State<ChatScreen> {
                       focusNode: _focusNode,
                       textInputAction: TextInputAction.newline,
                       keyboardType: TextInputType.multiline,
-                      maxLines: null,
+                      maxLines: 5,
                       minLines: 1,
                       style: const TextStyle(color: Colors.white),
-                      onTapOutside: (event) => FocusManager.instance.primaryFocus!.unfocus(),
-                      decoration: const InputDecoration.collapsed(
-                        hintText: 'Ask me anything...',
-                        hintStyle: TextStyle(color: Colors.grey),
-                      ),
+                      onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
+                      decoration: const InputDecoration(
+                          hintText: 'Ask me anything...', hintStyle: TextStyle(color: Colors.grey), border: InputBorder.none),
                     ),
                   ),
                 ),
@@ -105,17 +132,11 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
             IconButton(
               onPressed: () {
-                if (_textController.text.isNotEmpty) {
-                  chatController.sendMessages(_textController.text);
+                String message = _textController.text.trim();
+                if (message.isNotEmpty) {
+                  saveMessageToFirebase(message);
                   _textController.clear();
                   _focusNode.unfocus();
-                  _databaseReferenceToStoreChats.child(DateTime.now().millisecondsSinceEpoch.toString()).set({
-                    'savedChat': _textController.text.toString(),
-                  }).onError(
-                    (error, stackTrace) => Get.showSnackbar(GetSnackBar(
-                      message: 'Error While Saving Chat: $error',
-                    )),
-                  );
                 }
               },
               icon: const Icon(Icons.send, color: Colors.blue),
@@ -157,7 +178,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 : const SizedBox(),
           ),
           Container(
-            height: height * 0.08,
             decoration: const BoxDecoration(
               color: Color(0xff0a1427),
             ),

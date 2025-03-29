@@ -7,16 +7,17 @@ class ChatController extends GetxController {
 
   RxBool isLoading = false.obs;
 
-  Future<void> sendMessages(String inputMessage) async {
+  Future<String> sendMessages(String inputMessage) async {
     messages.add(ChatModel(role: 'user', parts: [ChatPartModel(text: inputMessage)]));
     isLoading.value = true;
 
     try {
       String response = await ChatRepo.chatTextGenerationRepo(messages);
-
       messages.add(ChatModel(role: 'model', parts: [ChatPartModel(text: response)]));
+      return response;
     } catch (e) {
       Get.snackbar('Error', 'Failed to get response: $e');
+      return "Error generating response";
     } finally {
       isLoading.value = false;
     }

@@ -43,7 +43,10 @@ class AppDrawer extends StatelessWidget {
               child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   itemCount: 20,
-                  itemBuilder: (context, index) => const RecentSavedChatTile(title: 'Your Recent Messages')),
+                  itemBuilder: (context, index) => RecentSavedChatTile(
+                        title: 'Your Recent Messages',
+                        onTap: () {},
+                      )),
             )
           ],
         ),
