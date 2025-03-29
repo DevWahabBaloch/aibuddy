@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:aibuddy/core/constants/app_colors.dart';
 import 'package:aibuddy/core/widgets/appbar/appbar/my_app_bar.dart';
 import 'package:aibuddy/core/widgets/jumping_dots/jumping_dots.dart';
@@ -25,26 +24,22 @@ class _ChatScreenState extends State<ChatScreen> {
   final FocusNode _focusNode = FocusNode();
   bool _isTextFieldFocused = false;
 
-  // Realtime Database Using Firebase:
   final _databaseReferenceToStoreChats = FirebaseDatabase.instance.ref('saved_chats');
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  late String chatId;
 
-  void saveMessageToFirebase(String message) async {
+  void saveMessageToFirebase(String chatId, String message) async {
     User? user = _auth.currentUser;
-
     if (user != null) {
       final messageId = DateTime.now().millisecondsSinceEpoch.toString();
-
-      await _databaseReferenceToStoreChats.child(user.uid).child(messageId).set({
+      await _databaseReferenceToStoreChats.child(user.uid).child(chatId).child(messageId).set({
         'role': 'user',
         'text': message,
       });
-
       try {
         String aiResponse = await chatController.sendMessages(message);
-
         if (aiResponse.isNotEmpty) {
-          await _databaseReferenceToStoreChats.child(user.uid).child('${messageId}_bot').set({
+          await _databaseReferenceToStoreChats.child(user.uid).child(chatId).child('${messageId}_model').set({
             'role': 'model',
             'text': aiResponse,
           });
@@ -57,6 +52,19 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  Future<String?> getMostRecentChatId() async {
+    User? user = _auth.currentUser;
+    if (user == null) return null;
+    final snapshot = await _databaseReferenceToStoreChats.child(user.uid).get();
+    if (snapshot.exists && snapshot.value is Map) {
+      Map<dynamic, dynamic> chats = snapshot.value as Map<dynamic, dynamic>;
+      List<String> chatIds = chats.keys.map((key) => key.toString()).toList();
+      chatIds.sort((a, b) => b.compareTo(a)); // Newest first
+      return chatIds.isNotEmpty ? chatIds.first : null;
+    }
+    return null;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -65,6 +73,25 @@ class _ChatScreenState extends State<ChatScreen> {
         _isTextFieldFocused = _focusNode.hasFocus;
       });
     });
+    log("[log] Get.arguments received: ${Get.arguments}");
+
+    final args = Get.arguments;
+    if (args is Map && args.containsKey('chatId') && args['chatId'] != null) {
+      chatId = args['chatId'].toString();
+      log("[log] Loaded chatId: $chatId");
+      chatController.loadChatHistory(chatId);
+    } else {
+      getMostRecentChatId().then((recentChatId) {
+        if (recentChatId != null) {
+          chatId = recentChatId;
+          log("[log] Loaded most recent chatId: $chatId");
+          chatController.loadChatHistory(chatId);
+        } else {
+          chatId = DateTime.now().millisecondsSinceEpoch.toString();
+          log("[log] Generated new chatId: $chatId");
+        }
+      });
+    }
   }
 
   @override
@@ -89,18 +116,9 @@ class _ChatScreenState extends State<ChatScreen> {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.star, color: AppColors.secondary),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.image_rounded, color: AppColors.secondary),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.mic, color: AppColors.secondary),
-                  ),
+                  IconButton(onPressed: () {}, icon: const Icon(Icons.star, color: AppColors.secondary)),
+                  IconButton(onPressed: () {}, icon: const Icon(Icons.image_rounded, color: AppColors.secondary)),
+                  IconButton(onPressed: () {}, icon: const Icon(Icons.mic, color: AppColors.secondary)),
                 ],
               ),
             Expanded(
@@ -124,7 +142,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       style: const TextStyle(color: Colors.white),
                       onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
                       decoration: const InputDecoration(
-                          hintText: 'Ask me anything...', hintStyle: TextStyle(color: Colors.grey), border: InputBorder.none),
+                        hintText: 'Ask me anything...',
+                        hintStyle: TextStyle(color: Colors.grey),
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
                 ),
@@ -134,7 +155,7 @@ class _ChatScreenState extends State<ChatScreen> {
               onPressed: () {
                 String message = _textController.text.trim();
                 if (message.isNotEmpty) {
-                  saveMessageToFirebase(message);
+                  saveMessageToFirebase(chatId, message);
                   _textController.clear();
                   _focusNode.unfocus();
                 }
@@ -161,9 +182,10 @@ class _ChatScreenState extends State<ChatScreen> {
             child: Obx(
               () => ListView.builder(
                 physics: const BouncingScrollPhysics(),
+                reverse: true,
                 itemCount: chatController.messages.length,
                 itemBuilder: (context, index) {
-                  final messages = chatController.messages[index];
+                  final messages = chatController.messages[chatController.messages.length - 1 - index];
                   return ChatMessages(text: messages.parts.first.text, sender: messages.role);
                 },
               ),
@@ -178,9 +200,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 : const SizedBox(),
           ),
           Container(
-            decoration: const BoxDecoration(
-              color: Color(0xff0a1427),
-            ),
+            decoration: const BoxDecoration(color: Color(0xff0a1427)),
             child: buildTextComposer(),
           ),
         ],

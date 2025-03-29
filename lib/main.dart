@@ -1,5 +1,6 @@
 import 'package:aibuddy/app.dart';
 import 'package:aibuddy/features/auth/controller/auth_controller.dart';
+import 'package:aibuddy/features/chat_page/controller/saved_chats_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,6 +16,7 @@ void main() async {
   );
 
   Get.put(AuthController());
+  Get.put(SavedChatsController());
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
   );
