@@ -8,16 +8,17 @@ import 'package:aibuddy/features/chat_page/widgets/chat_messages.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+class ChatPage extends StatefulWidget {
+  const ChatPage({super.key});
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<ChatPage> createState() => _ChatPageState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatPageState extends State<ChatPage> {
   final TextEditingController _textController = TextEditingController();
   final ChatController chatController = Get.put(ChatController());
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
@@ -73,24 +74,15 @@ class _ChatScreenState extends State<ChatScreen> {
         _isTextFieldFocused = _focusNode.hasFocus;
       });
     });
-    log("[log] Get.arguments received: ${Get.arguments}");
-
     final args = Get.arguments;
     if (args is Map && args.containsKey('chatId') && args['chatId'] != null) {
       chatId = args['chatId'].toString();
       log("[log] Loaded chatId: $chatId");
       chatController.loadChatHistory(chatId);
     } else {
-      getMostRecentChatId().then((recentChatId) {
-        if (recentChatId != null) {
-          chatId = recentChatId;
-          log("[log] Loaded most recent chatId: $chatId");
-          chatController.loadChatHistory(chatId);
-        } else {
-          chatId = DateTime.now().millisecondsSinceEpoch.toString();
-          log("[log] Generated new chatId: $chatId");
-        }
-      });
+      chatId = DateTime.now().millisecondsSinceEpoch.toString();
+      log("[log] Generated new chatId: $chatId");
+      chatController.messages.clear();
     }
   }
 
@@ -154,6 +146,7 @@ class _ChatScreenState extends State<ChatScreen> {
             IconButton(
               onPressed: () {
                 String message = _textController.text.trim();
+                HapticFeedback.mediumImpact();
                 if (message.isNotEmpty) {
                   saveMessageToFirebase(chatId, message);
                   _textController.clear();
@@ -173,6 +166,16 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: MyAppBar(
         title: 'AI Buddy',
         onTap: () => _scaffoldKey.currentState!.openDrawer(),
+        onTapForNewChat: () {
+          log('New Chat Button Pressed');
+          final newChatId = DateTime.now().millisecondsSinceEpoch.toString();
+          setState(() {
+            chatId = newChatId;
+            chatController.messages.clear();
+            _textController.clear();
+          });
+          chatController.loadChatHistory(chatId);
+        },
       ),
       drawer: const AppDrawer(),
       body: Column(

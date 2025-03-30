@@ -4,7 +4,7 @@ import 'package:aibuddy/core/services/auth_service.dart';
 import 'package:aibuddy/features/auth/binding/auth_binding.dart';
 import 'package:aibuddy/features/auth/view/auth_page.dart';
 import 'package:aibuddy/features/chat_page/binding/chat_binding.dart';
-import 'package:aibuddy/features/chat_page/view/chat_screen.dart';
+import 'package:aibuddy/features/chat_page/view/chat_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -57,7 +57,7 @@ class SignUpController extends GetxController {
     if (userCredential != null) {
       log('userCredential == $userCredential .. ${userCredential.additionalUserInfo}.. ${userCredential.user!.email}');
       user.value = userCredential.user;
-      Get.offAll(const ChatScreen(), binding: ChatBinding());
+      Get.offAll(const ChatPage(), binding: ChatBinding());
     } else {
       Get.offAll(const AuthPage(), binding: AuthBinding());
     }
@@ -76,7 +76,7 @@ class SignUpController extends GetxController {
       if (isSuccess) {
         user.value = FirebaseAuth.instance.currentUser;
         log('Sign-Up Successful: ${user.value?.email}');
-        Get.offAll(const ChatScreen(), binding: ChatBinding());
+        Get.offAll(const ChatPage(), binding: ChatBinding());
         return true;
       } else {
         log('Sign-Up Failed');

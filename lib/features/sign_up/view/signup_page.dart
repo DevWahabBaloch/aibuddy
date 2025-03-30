@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SignUpPage extends GetView<SignUpController> {
-  const SignUpPage({super.key});
+class SignupPage extends GetView<SignUpController> {
+  const SignupPage({super.key});
 
   @override
   Widget build(BuildContext context) {

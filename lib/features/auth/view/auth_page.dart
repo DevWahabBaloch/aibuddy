@@ -6,9 +6,9 @@ import 'package:aibuddy/features/auth/controller/auth_controller.dart';
 import 'package:aibuddy/core/widgets/buttons/app_button.dart';
 import 'package:aibuddy/core/widgets/text_field/app_text_field.dart';
 import 'package:aibuddy/features/chat_page/binding/chat_binding.dart';
-import 'package:aibuddy/features/chat_page/view/chat_screen.dart';
-import 'package:aibuddy/features/sign_up/binding/sign_up_binding.dart';
-import 'package:aibuddy/features/sign_up/view/sign_up_page.dart';
+import 'package:aibuddy/features/chat_page/view/chat_page.dart';
+import 'package:aibuddy/features/sign_up/binding/signup_binding.dart';
+import 'package:aibuddy/features/sign_up/view/signup_page.dart';
 import 'package:aibuddy/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -75,7 +75,7 @@ class AuthPage extends GetView<AuthController> with Validator {
                           password: controller.passwordController.value.text,
                         );
                         if (isAuthenticated) {
-                          Get.off(const ChatScreen(), binding: ChatBinding());
+                          Get.off(const ChatPage(), binding: ChatBinding());
                         } else {
                           Get.snackbar("Error", "Invalid email or password",
                               backgroundColor: Colors.red, colorText: Colors.white);
@@ -108,7 +108,7 @@ class AuthPage extends GetView<AuthController> with Validator {
                     title: 'Continue with Google',
                   ),
                   AppButton.iconTextButton(
-                    onPressed: () => Get.off(const SignUpPage(), binding: SignUpBinding()),
+                    onPressed: () => Get.off(const SignupPage(), binding: SignupBinding()),
                     buttonColor: AppColors.onSecondary,
                     borderRadius: 30,
                     prefixIcon: Padding(

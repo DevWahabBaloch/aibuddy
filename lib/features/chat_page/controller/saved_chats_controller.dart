@@ -8,14 +8,22 @@ class SavedChatsController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   var savedChats = <Map<String, dynamic>>[].obs;
+  var isLoading = true.obs; // Add loading state
 
   @override
   void onInit() {
     super.onInit();
-    fetchUserMessages();
+    // Wait for authentication state to resolve
+    _auth.authStateChanges().firstWhere((user) => user != null).then((user) {
+      fetchUserMessages();
+    }).catchError((e) {
+      log("Error waiting for auth state: $e");
+      isLoading.value = false;
+    });
   }
 
   Future<void> fetchUserMessages() async {
+    isLoading.value = true;
     User? user = _auth.currentUser;
     if (user != null) {
       try {
@@ -56,7 +64,12 @@ class SavedChatsController extends GetxController {
         }
       } catch (e) {
         log("Error fetching saved chats: $e");
+      } finally {
+        isLoading.value = false;
       }
+    } else {
+      log("User not authenticated");
+      isLoading.value = false;
     }
   }
 }

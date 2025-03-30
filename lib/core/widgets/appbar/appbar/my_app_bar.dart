@@ -105,9 +105,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     required final String title,
     final VoidCallback? onTap,
+    final VoidCallback? onTapForNewChat,
   }) : _child = _AppBar(
           title: title,
           onTap: onTap,
+          onTapForNewChat: onTapForNewChat,
         );
 
   MyAppBar.noBackBtn({
@@ -127,7 +129,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 class _AppBar extends StatelessWidget {
   final String title;
   final VoidCallback? onTap;
-  const _AppBar({required this.title, this.onTap});
+  final VoidCallback? onTapForNewChat;
+  const _AppBar({required this.title, this.onTap, this.onTapForNewChat});
 
   @override
   Widget build(BuildContext context) {
@@ -155,11 +158,14 @@ class _AppBar extends StatelessWidget {
         ),
       ),
       actions: [
-        Image.asset(
-          Assets.images.icEdit.path,
-          color: Colors.white,
-          height: height * 0.03,
-          fit: BoxFit.contain,
+        InkWell(
+          onTap: onTapForNewChat,
+          child: Image.asset(
+            Assets.images.icEdit.path,
+            color: Colors.white,
+            height: height * 0.03,
+            fit: BoxFit.contain,
+          ),
         ),
         SizedBox(width: width * 0.02)
       ],
