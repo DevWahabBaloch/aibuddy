@@ -128,7 +128,7 @@ class AppDrawer extends StatelessWidget {
                           Get.snackbar(
                             "Chat Deleted",
                             "Deleted chat: ${chat['text']}",
-                            snackPosition: SnackPosition.BOTTOM,
+                            snackPosition: SnackPosition.TOP,
                             backgroundColor: Colors.red,
                             colorText: Colors.white,
                             duration: const Duration(seconds: 2),
